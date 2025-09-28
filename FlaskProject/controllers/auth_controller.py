@@ -31,8 +31,12 @@ def login():
 
         if auth_service.login(email, password):
             flash("Logged in.")
-            return redirect(url_for("auth.register"))
+            return redirect(url_for("auth.home"))
         else:
             flash("Invalid email or password.")
 
     return render_template("login.html")
+
+@auth_bp.route('/home')
+def home():
+    return render_template("index.html")
