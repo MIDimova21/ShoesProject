@@ -1,8 +1,8 @@
 products = [
-    {"id": 1, "name": "Sneakers", "color": "white", "sizes": "36, 37, 39", "price": 60, "stock": 5},
-    {"id": 2, "name": "Boots", "color": "black", "sizes": "36, 37, 38, 40", "price": 80, "stock": 2},
-    {"id": 3, "name": "Sandals", "color": "brown",  "sizes": "37, 39, 41, 42", "price": 40, "stock": 10},
-    {"id": 4, "name": "Heels", "color": "red", "sizes": "36, 37, 38, 39", "price": 50, "stock": 1},
+    {"id": 1, "name": "Nike", "color": "white", "sizes": "36, 37, 39", "price": 60, "stock": 5},
+    {"id": 2, "name": "Puma", "color": "black", "sizes": "36, 37, 38, 40", "price": 80, "stock": 2},
+    {"id": 3, "name": "Lasocki", "color": "brown",  "sizes": "37, 39, 41, 42", "price": 40, "stock": 10},
+    {"id": 4, "name": "Guess", "color": "red", "sizes": "36, 37, 38, 39", "price": 50, "stock": 1},
 ]
 
 def get_all_products():
