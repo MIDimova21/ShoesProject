@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+<h2>Checkout</h2>
+
+<form method="POST">
+  <label>Address:</label><br>
+  <input type="text" name="address" required><br><br>
+
+  <label>Payment method:</label><br>
+  <select name="payment" required>
+    <option value="Credit Card">Credit Card</option>
+    <option value="Cash on Delivery">Cash on Delivery</option>
+  </select><br><br>
+
+  <button type="submit">Place Order</button>
+</form>
+
+{% for message in get_flashed_messages() %}
+  <p style="color:green;">{{ message }}</p>
+{% endfor %}
+{% endblock %}
