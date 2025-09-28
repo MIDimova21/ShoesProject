@@ -1,19 +1,35 @@
 {% extends "base.html" %}
 
+{% block link %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
+{% endblock %}
+
 {% block content %}
-<h2>Your Cart</h2>
+<h2 class="page-title">Your Cart</h2>
 
 {% if cart_items %}
-  <ul>
-  {% for item in cart_items %}
-    <li>
-      <strong>{{ item.name }}</strong> - ${{ item.price }} ({{ item.color }})
-    </li>
-  {% endfor %}
-  </ul>
-  <a href="{{ url_for('cart.checkout') }}">Proceed to Checkout</a>
-{% else %}
-  <p>Your cart is empty.</p>
-{% endif %}
+  <div class="cart-list">
+    {% for item in cart_items %}
+      <div class="cart-item">
+        <div class="meta">
+          <h3>{{ item.name }}</h3>
+          <p>Color: {{ item.color }}</p>
+          <p>Price: ${{ item.price }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 
+  <div class="cart-summary">
+    <h3>Summary</h3>
+    <p>Total items: {{ cart_items|length }}</p>
+    <p>Total price: ${{ cart_items | sum(attribute='price') }}</p>
+    <a class="btn-checkout" href="{{ url_for('cart.checkout') }}">Proceed to Checkout</a>
+  </div>
+{% else %}
+  <div class="empty-cart">
+    <p>Your cart is empty 🛒</p>
+  </div>
+{% endif %}
 {% endblock %}
