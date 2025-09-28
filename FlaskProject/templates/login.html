@@ -1,18 +1,27 @@
 {% extends "base.html" %}
 
+{% block link %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+{% endblock %}
+
 {% block content %}
-<h2>Login</h2>
-<form method="POST">
-  <label>Email:</label>
-  <input type="email" name="email" required><br><br>
+<div class="form-wrapper">
+  <div class="form-card">
+    <h2>Login</h2>
+    <form method="POST">
+      <label>Email:</label>
+      <input type="email" name="email" required><br><br>
 
-  <label>Password:</label>
-  <input type="password" name="password" required><br><br>
+      <label>Password:</label>
+      <input type="password" name="password" required><br><br>
 
-  <button type="submit">Login</button>
-</form>
+      <button type="submit">Login</button>
+    </form>
 
-{% for message in get_flashed_messages() %}
-  <p style="color:red;">{{ message }}</p>
-{% endfor %}
+    {% for message in get_flashed_messages() %}
+      <p style="color:red;">{{ message }}</p>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
