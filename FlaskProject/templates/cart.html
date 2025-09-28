@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+<h2>Your Cart</h2>
+
+{% if cart_items %}
+  <ul>
+  {% for item in cart_items %}
+    <li>
+      <strong>{{ item.name }}</strong> - ${{ item.price }} ({{ item.color }})
+    </li>
+  {% endfor %}
+  </ul>
+  <a href="{{ url_for('cart.checkout') }}">Proceed to Checkout</a>
+{% else %}
+  <p>Your cart is empty.</p>
+{% endif %}
+
+{% endblock %}
