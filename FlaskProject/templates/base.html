@@ -11,12 +11,11 @@
 </head>
 <body>
     <header>
-        <h1>Shoes Store</h1>
         <nav>
-            <a href="">Home</a> |
+            <a href="{{ url_for('auth.home') }}"><h1>Shoes Store</h1></a>
             <a href="{{ url_for('auth.register') }}">Register</a> |
             <a href="">Login</a> |
-            <a href="">Catalog</a> |
+            <a href="{{ url_for('catalog.show_catalog') }}">Catalog</a> |
             <a href="">Cart</a>
         </nav>
         <hr>

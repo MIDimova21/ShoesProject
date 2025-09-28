@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+<h2>Product Catalog</h2>
+<ul>
+  {% for product in products %}
+    <li>
+      <strong>{{ product.name }}</strong> - {{ product.color }} <br>
+      Price: ${{ product.price }} <br>
+      Stock: {{ product.stock }}
+    </li>
+    <hr>
+  {% endfor %}
+</ul>
+{% endblock %}
