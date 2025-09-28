@@ -34,7 +34,3 @@ def login():
             flash("Invalid email or password.")
 
     return render_template("login.html")
-
-@auth_bp.route('/home')
-def home():
-    return render_template("index.html")
