@@ -1,22 +1,31 @@
 {% extends "base.html" %}
 
+{% block link %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='checkout.css') }}">
+{% endblock %}
+
 {% block content %}
-<h2>Checkout</h2>
+<div class="checkout-wrapper">
+  <div class="checkout-card">
+    <h2>Checkout</h2>
 
-<form method="POST">
-  <label>Address:</label><br>
-  <input type="text" name="address" required><br><br>
+    <form method="POST">
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" required>
 
-  <label>Payment method:</label><br>
-  <select name="payment" required>
-    <option value="Credit Card">Credit Card</option>
-    <option value="Cash on Delivery">Cash on Delivery</option>
-  </select><br><br>
+      <label for="payment">Payment method:</label>
+      <select id="payment" name="payment" required>
+        <option value="Credit Card">Credit Card</option>
+        <option value="Cash on Delivery">Cash on Delivery</option>
+      </select>
 
-  <button type="submit">Place Order</button>
-</form>
+      <button type="submit">Place Order</button>
+    </form>
 
-{% for message in get_flashed_messages() %}
-  <p style="color:green;">{{ message }}</p>
-{% endfor %}
+    {% for message in get_flashed_messages() %}
+      <p class="flash">{{ message }}</p>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

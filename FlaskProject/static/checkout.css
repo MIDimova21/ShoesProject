@@ -1,0 +1,75 @@
+.checkout-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+
+.checkout-card {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 420px;
+}
+
+
+.checkout-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+
+.checkout-card label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #374151;
+}
+.checkout-card input,
+.checkout-card select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.checkout-card input {
+    width: 93%;
+}
+
+.checkout-card input:focus,
+.checkout-card select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+  outline: none;
+}
+
+
+.checkout-card button {
+  width: 100%;
+  padding: 12px;
+  background: #9742b8;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+
+
+.checkout-card .flash {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 14px;
+}
