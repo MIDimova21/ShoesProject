@@ -2,12 +2,30 @@
 
 {% block content %}
 <h2>Product Catalog</h2>
+
+<form method="get" action="{{ url_for('catalog.show_catalog') }}">
+  <input type="text" name="query" placeholder="Search..." value="{{ search_query or '' }}">
+
+  <label>Max Price:</label>
+  <input type="number" name="max_price" value="{{ max_price or '' }}">
+
+  <label>
+    <input type="checkbox" name="in_stock" {% if in_stock %}checked{% endif %}>
+    In stock only
+  </label>
+
+  <button type="submit">Filter</button>
+</form>
+
+<hr>
+
 <ul>
   {% for product in products %}
     <li>
       <strong>{{ product.name }}</strong> - {{ product.color }} <br>
       Price: ${{ product.price }} <br>
       Stock: {{ product.stock }}
+      <a href="{{ url_for('cart.add_to_cart', product_id=product.id) }}">Add to Cart</a>
     </li>
     <hr>
   {% endfor %}
