@@ -14,8 +14,6 @@ def register():
 
         if auth_service.register(first_name, last_name, email, password):
             flash("Registered successfully! You can now log in.")
-            print(auth_service.users)
-
             return redirect(url_for("auth.login"))
         else:
             flash("You already have an account.")

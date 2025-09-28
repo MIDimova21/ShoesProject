@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request
 
 from FlaskProject.services import catalog_service
-from FlaskProject.services.catalog_service import products
 
 catalog_bp = Blueprint('catalog', __name__)
 

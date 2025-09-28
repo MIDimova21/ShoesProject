@@ -1,4 +1,3 @@
-# controllers/cart_controller.py
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from FlaskProject.services import catalog_service, cart_service, order_service
 
@@ -11,7 +10,6 @@ def show_cart():
 
 @cart_bp.route("/cart/add/<int:product_id>")
 def add_to_cart(product_id):
-    # find the product by id
     products = catalog_service.get_all_products()
     product = next((p for p in products if p["id"] == product_id), None)
 
