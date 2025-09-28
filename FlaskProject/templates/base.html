@@ -2,9 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Shoes Store</title>
+
+    {% block link %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    {% endblock %}
+
 </head>
 <body>
+    <header>
+        <h1>Shoes Store</h1>
+        <nav>
+            <a href="">Home</a> |
+            <a href="{{ url_for('auth.register') }}">Register</a> |
+            <a href="">Login</a> |
+            <a href="">Catalog</a> |
+            <a href="">Cart</a>
+        </nav>
+        <hr>
+    </header>
 
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <p>&copy; 2025 Shoe Store</p>
+    </footer>
 </body>
 </html>
