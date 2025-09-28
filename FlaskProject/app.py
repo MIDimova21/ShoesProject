@@ -1,5 +1,6 @@
 from flask import Flask
 
+from FlaskProject.controllers.cart_controller import cart_bp
 from controllers.catalog_controller import catalog_bp
 from controllers.auth_controller import auth_bp
 
@@ -9,6 +10,7 @@ app.secret_key = 'W292F'
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(catalog_bp)
+app.register_blueprint(cart_bp)
 
 if __name__ == '__main__':
     app.run()
