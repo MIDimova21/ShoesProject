@@ -1,10 +1,13 @@
 from flask import Flask
+from controllers.auth_controller import auth_bp
+
 
 app = Flask(__name__)
+app.secret_key = 'W292F'
 
-
+app.register_blueprint(auth_bp)
 @app.route('/')
-def hello_world():  # put application's code here
+def index():
     return 'Hello World!'
 
 
