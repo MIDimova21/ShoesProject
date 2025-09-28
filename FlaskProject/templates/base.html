@@ -12,14 +12,13 @@
 <body>
     <header>
         <nav>
-            <a href="{{ url_for('auth.home') }}"><h1>Shoes Store</h1></a>
+            <a href="{{ url_for('auth.home') }}"><h1>Shop</h1></a>
             <a href="{{ url_for('auth.register') }}">Register</a> |
             <a href="{{ url_for('auth.login') }}">Login</a> |
             <a href="{{ url_for('catalog.show_catalog') }}">Catalog</a> |
             <a href="{{ url_for('cart.show_cart') }}">Cart</a>
 
         </nav>
-        <hr>
     </header>
 
     <main>
@@ -27,7 +26,6 @@
     </main>
 
     <footer>
-        <hr>
         <p>&copy; 2025 Shoe Store</p>
     </footer>
 </body>
