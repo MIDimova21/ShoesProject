@@ -1,34 +1,43 @@
 products = [
-    {"id": 1, "name": "Sneakers", "color": "white", "price": 60, "stock": 5},
-    {"id": 2, "name": "Boots", "color": "black", "price": 80, "stock": 2},
-    {"id": 3, "name": "Sandals", "color": "brown", "price": 40, "stock": 10},
+    {"id": 1, "name": "Sneakers", "color": "white", "sizes": "36, 37, 39", "price": 60, "stock": 5},
+    {"id": 2, "name": "Boots", "color": "black", "sizes": "36, 37, 38, 40", "price": 80, "stock": 2},
+    {"id": 3, "name": "Sandals", "color": "brown",  "sizes": "37, 39, 41, 42", "price": 40, "stock": 10},
 ]
 
 def get_all_products():
     return products
 
 def search_products(query):
-    query = query.lower()
-    return [
-        product for product in products
-        if query in product["name"].lower() or query in product["color"].lower()
-    ]
-
-def filter_products(query=None, max_price=None, in_stock=False):
-    result = products
-
-    # Search filter
+    result = []
     if query:
         q = query.lower()
-        result = [p for p in result if q in p["name"].lower() or q in p["color"].lower()]
+        for product in products:
+            name = product["name"].lower()
+            color = product["color"].lower()
+            if q in name or q in color:
+                result.append(product)
+        return result
+    return products
 
-    # Price filter
+def filter_products(product_list, max_price, available_size, in_stock):
+    result = []
+
     if max_price:
-        result = [p for p in result if p["price"] <= max_price]
+        for product in products:
+            if product["price"] <= max_price:
+                result.append(product)
+        return result
 
-    # Stock filter
+    if available_size:
+        for product in products:
+            if available_size in product["sizes"]:
+                result.append(product)
+        return result
+
     if in_stock:
-        result = [p for p in result if p["stock"] > 0]
+        for product in products:
+            if product["stock"] > 0:
+                result.append(product)
+        return result
 
-    return result
-
+    return product_list
