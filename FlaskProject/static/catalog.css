@@ -1,0 +1,139 @@
+.page-title {
+  text-align: center;
+  justify-content: center;
+}
+
+.filter-bar {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+  margin-left: 350px;
+  margin-right: 350px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.search {
+  margin-right: 100px;
+}
+
+.checkbox {
+  margin-right: -60px;
+  margin-left: -40px;
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  min-width: 160px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.filter-bar input:focus,
+.filter-bar select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+  outline: none;
+}
+
+.filter-bar label {
+  font-size: 14px;
+  color: #374151;
+}
+
+.filter-bar button {
+  padding: 10px 16px;
+  background: #9742b8;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.1s;
+}
+
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
+  margin: 80px;
+}
+
+.product-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+
+.product-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: #1f2937;
+}
+
+.product-meta {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.product-price {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.product-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.product-actions a {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.btn-add {
+  background: #9742b8;
+  color: #fff;
+}
+
+.btn-update {
+  background: #f3f4f6;
+  color: #374151;
+}
+.btn-update:hover {
+  background: #e5e7eb;
+}
+
+.btn-delete {
+  background: #dc2626;
+  color: #fff;
+}
+.btn-delete:hover {
+  background: #b91c1c;
+}
