@@ -1,10 +1,9 @@
 from flask import Blueprint, request, flash, redirect, url_for, render_template
-
 from FlaskProject.services import auth_service
 
 auth_bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/', methods=['GET', 'POST'])
+@auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         first_name = request.form['first_name']
@@ -38,3 +37,8 @@ def login():
             flash("Invalid email or password.")
 
     return render_template("login.html")
+
+
+@auth_bp.route('/')
+def index():
+    return render_template("base.html")

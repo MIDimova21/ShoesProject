@@ -1,3 +1,16 @@
+from flask import flash
+
+
+class Products:
+    def __init__(self, product_id, name, color, sizes, price, stock):
+        self.product_id = product_id
+        self.name = name
+        self.color = color
+        self.sizes = sizes
+        self.price = price
+        self.stock = stock
+
+
 products = [
     {"id": 1, "name": "Nike", "color": "white", "sizes": "36, 37, 39", "price": 60, "stock": 5},
     {"id": 2, "name": "Puma", "color": "black", "sizes": "36, 37, 38, 40", "price": 80, "stock": 2},
@@ -5,8 +18,43 @@ products = [
     {"id": 4, "name": "Guess", "color": "red", "sizes": "36, 37, 38, 39", "price": 50, "stock": 1},
 ]
 
+def add_product(product):
+    products.append({
+        "id": product.product.id,
+        "name": product.product.name,
+        "color": product.product.color,
+        "sizes": product.product.sizes,
+        "price": product.product.price,
+        "stock": product.product.stock
+    })
+
+def get_product(product_id):
+    for product in products:
+        if product_id == product["id"]:
+            return product
+    flash("Product Not Found!", "danger")
+
+
 def get_all_products():
     return products
+
+
+def update_product(product_id, **kwargs):
+    product = get_product(product_id)
+    if not product:
+        return None
+    for key, value in kwargs.items():
+        if key in product:
+            product[key] = value
+    return product
+
+
+def delete_product(product_id):
+    product = get_product(product_id)
+    if product:
+        products.remove(product)
+
+
 
 def search_products(query):
     result = []
