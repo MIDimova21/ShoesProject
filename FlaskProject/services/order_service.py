@@ -1,6 +1,11 @@
 from flask import session
 from FlaskProject.services import catalog_service
 
+class Order:
+    def __init__(self, address, payment_method):
+        self.address = address,
+        self.payment_method = payment_method
+
 orders = []
 
 def create_order(address, payment_method):

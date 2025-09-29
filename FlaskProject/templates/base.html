@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Shoes Store</title>
+    <title>ShoeBox</title>
 
     {% block link %}
         <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
@@ -12,11 +12,15 @@
 <body>
     <header>
         <nav>
-            <a href="{{ url_for('catalog.show_catalog') }}"><h1>Shop</h1></a>
-            <a href="{{ url_for('auth.register') }}">Register</a> |
-            <a href="{{ url_for('auth.login') }}">Login</a> |
-            <a href="{{ url_for('catalog.show_catalog') }}">Catalog</a> |
-            <a href="{{ url_for('cart.show_cart') }}">Cart</a>
+            <div class="container_nav">
+                <a href="{{ url_for('catalog.show_catalog') }}"><h1>ShoeBox</h1></a>
+
+                <a href="{{ url_for('auth.register') }}">Регистрация</a> |
+                <a href="{{ url_for('auth.login') }}">Вход</a> |
+                <a href="{{ url_for('catalog.show_catalog') }}">Каталог</a> |
+                <a href="{{ url_for('cart.show_cart') }}">Количка</a>
+            </div>
+
 
         </nav>
     </header>
@@ -26,7 +30,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Shoe Store</p>
+        <p>&copy; 2025 ShoеBox</p>
     </footer>
 </body>
 </html>
