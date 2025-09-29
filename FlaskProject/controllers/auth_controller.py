@@ -11,12 +11,16 @@ def register():
         last_name = request.form['last_name']
         email = request.form['email']
         password = request.form['password']
+        password_check = request.form['check_password']
 
-        if auth_service.register(first_name, last_name, email, password):
-            flash("Registered successfully! You can now log in.")
-            return redirect(url_for("auth.login"))
+        if password == password_check:
+            if auth_service.register(first_name, last_name, email, password, password_check):
+                flash("Registered successfully! You can now log in.")
+                return redirect(url_for("auth.login"))
+            else:
+                flash("You already have an account.")
         else:
-            flash("You already have an account.")
+            flash("Passwords don't match.")
 
     return render_template("register.html")
 
@@ -29,7 +33,7 @@ def login():
 
         if auth_service.login(email, password):
             flash("Logged in.")
-            return redirect(url_for("auth.home"))
+            return redirect(url_for("catalog.show_catalog"))
         else:
             flash("Invalid email or password.")
 

@@ -1,6 +1,6 @@
 from flask import Flask
 
-from FlaskProject.controllers.cart_controller import cart_bp
+from controllers.cart_controller import cart_bp
 from controllers.catalog_controller import catalog_bp
 from controllers.auth_controller import auth_bp
 
