@@ -4,7 +4,7 @@ from FlaskProject.services import catalog_service
 
 catalog_bp = Blueprint('catalog', __name__)
 
-@catalog_bp.route("/catalog")
+@catalog_bp.route("/")
 def show_catalog():
     query = request.args.get("query")
     max_price = request.args.get("max_price", type=int)

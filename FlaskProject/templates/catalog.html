@@ -6,24 +6,22 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="page-title">Products Catalog</h2>
+<h2 class="page-title">Каталог с продукти</h2>
 
 <form class="filter-bar" method="get" action="{{ url_for('catalog.show_catalog') }}">
-  <input  type="text" name="query" placeholder="Search..." value="{{ search_query or '' }}">
-  <button class="search" type="submit">Search</button>
-
-  <label>Max Price:</label>
+  <h1 class="filter">Филтри:</h1>
+  <label>Цена:</label>
   <input type="number" name="max_price" value="{{ max_price or '' }}">
 
-  <label>Size:</label>
+  <label>Размер:</label>
   <input type="text" name="available_size" value="{{ max_size or '' }}">
 
   <label>
     <input class="checkbox" type="checkbox" name="in_stock" {% if in_stock %}checked{% endif %}>
-    In stock only
+    Само налични
   </label>
 
-  <button type="submit">Filter</button>
+  <button type="submit">Филтрирай</button>
 </form>
 
 <hr>

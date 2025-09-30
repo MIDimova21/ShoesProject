@@ -1,30 +1,25 @@
 .page-title {
   text-align: center;
   justify-content: center;
+  font-size: 40px;
+  color: #ffffff;
 }
 
 .filter-bar {
-  background: #ffffff;
   padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   margin-bottom: 20px;
-  margin-left: 350px;
-  margin-right: 350px;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
+  color: #ffffff;
 }
 
-.search {
-  margin-right: 100px;
-}
 
-.checkbox {
-  margin-right: -60px;
-  margin-left: -40px;
+.filter {
+  font-size: 34px;
+  font-weight: bolder;
 }
 
 .filter-bar input,
@@ -33,20 +28,12 @@
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 14px;
-  min-width: 160px;
   transition: border 0.2s, box-shadow 0.2s;
 }
 
-.filter-bar input:focus,
-.filter-bar select:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
-  outline: none;
-}
-
 .filter-bar label {
-  font-size: 14px;
-  color: #374151;
+  font-size: 22px;
+  color: #ffffff;
 }
 
 .filter-bar button {
@@ -56,6 +43,7 @@
   border-radius: 8px;
   color: #ffffff;
   cursor: pointer;
+  font-size: 20px;
   font-weight: 500;
   transition: background 0.2s, transform 0.1s;
 }
@@ -63,6 +51,7 @@
 
 .catalog-grid {
   display: grid;
+  border: none;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 
   margin: 80px;

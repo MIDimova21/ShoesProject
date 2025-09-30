@@ -14,9 +14,13 @@ def create_order(address, payment_method):
         return None
 
     for item in cart:
-        product = next((p for p in catalog_service.products if p["id"] == item["id"]), None)
-        if product and product["stock"] > 0:
-            product["stock"] -= 1
+        product_check = None
+        for product in catalog_service.products:
+            if product["id"] == item["id"]:
+                product_check = product
+                break
+        if product_check and product_check["stock"] > 0:
+            product_check["stock"] -= 1
 
     order = {
         "id": len(orders) + 1,
