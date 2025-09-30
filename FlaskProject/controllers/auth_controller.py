@@ -1,4 +1,4 @@
-from flask import Blueprint, request, flash, redirect, url_for, render_template
+from flask import Blueprint, request, flash, redirect, url_for, render_template, session
 from FlaskProject.services import auth_service
 
 auth_bp = Blueprint('auth', __name__)
@@ -30,11 +30,23 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        if auth_service.login(email, password):
-            flash("Logged in.")
+        user = auth_service.login(email, password)
+        if user:
+            session['user_email'] = user.email
+            session['user_name'] = user.first_name
+            session['is_admin'] = user.is_admin
+            session['logged_in'] = True
+
+            flash(f"Welcome back, {user.first_name}!")
             return redirect(url_for("catalog.show_catalog"))
         else:
             flash("Invalid email or password.")
 
     return render_template("login.html")
+
+@auth_bp.route('/logout')
+def logout():
+    session.clear()
+    flash("You have been logged out.")
+    return redirect(url_for("auth.login"))
 

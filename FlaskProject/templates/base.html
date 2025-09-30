@@ -21,10 +21,19 @@
               </form>
             </div>
             <div class="nav-right">
-              <a href="{{ url_for('auth.register') }}">Регистрация</a>
-              <a href="{{ url_for('auth.login') }}">Вход</a>
-              <a href="{{ url_for('catalog.show_catalog') }}"> Каталог</a>
-              <a href="{{ url_for('cart.show_cart') }}">🛒 Количка</a>
+              {% if session.logged_in %}
+                <span>Hello, {{ session.user_name }}!</span>
+                <a href="{{ url_for('catalog.show_catalog') }}">Каталог</a>
+                <a href="{{ url_for('cart.show_cart') }}">🛒 Количка</a>
+                {% if session.is_admin %}
+                  <a href="{{ url_for('admin.manage_products') }}">⚙️ Admin</a>
+                {% endif %}
+                <a href="{{ url_for('auth.logout') }}">Изход</a>
+              {% else %}
+                <a href="{{ url_for('auth.register') }}">Регистрация</a>
+                <a href="{{ url_for('auth.login') }}">Вход</a>
+                <a href="{{ url_for('catalog.show_catalog') }}">Каталог</a>
+              {% endif %}
             </div>
           </div>
         </nav>
@@ -32,6 +41,16 @@
     </header>
 
     <main>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for message in messages %}
+                <div class="flash flash-info">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
         {% block content %}{% endblock %}
     </main>
 

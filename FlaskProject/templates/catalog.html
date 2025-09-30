@@ -36,11 +36,10 @@
       <p class="product-price">${{ product.price }}</p>
 
       <div class="product-actions">
-        <a class="btn-add" href="{{ url_for('cart.add_to_cart', product_id=product.id) }}">Add to Cart</a>
-
-        {% if session.is_admin %}
-          <a class="btn-update" href="{{ url_for('catalog.update_product', product_id=product.id) }}">Update</a>
-          <a class="btn-delete" href="{{ url_for('catalog.delete_product', product_id=product.id) }}">Delete</a>
+        {% if session.logged_in %}
+          <a class="btn-add" href="{{ url_for('cart.add_to_cart', product_id=product.id) }}">Add to Cart</a>
+        {% else %}
+          <a class="btn-add" href="{{ url_for('auth.login') }}">Login to Buy</a>
         {% endif %}
       </div>
 

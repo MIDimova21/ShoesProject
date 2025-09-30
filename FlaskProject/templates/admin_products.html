@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block link %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='catalog.css') }}">
+{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Admin - Manage Products</h2>
+
+<div style="text-align: center; margin: 20px;">
+  <a href="{{ url_for('admin.add_product') }}" class="btn-add" style="padding: 12px 24px; display: inline-block; border-radius: 8px;">➕ Add New Product</a>
+</div>
+
+<div class="catalog-grid">
+  {% for product in products %}
+    <div class="product-card">
+      <h3 class="product-title">{{ product.name }}</h3>
+      <p class="product-meta">{{ product.color }}</p>
+      <p class="product-meta">Sizes: {{ product.sizes }}</p>
+      <p class="product-meta">Stock: {{ product.stock }}</p>
+      <p class="product-price">${{ product.price }}</p>
+
+      <div class="product-actions">
+        <a class="btn-update" href="{{ url_for('admin.edit_product', product_id=product.id) }}">Edit</a>
+        <a class="btn-delete" href="{{ url_for('admin.delete_product', product_id=product.id) }}" onclick="return confirm('Are you sure?')">Delete</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

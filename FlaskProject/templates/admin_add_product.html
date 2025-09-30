@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block link %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="form-wrapper">
+  <div class="form-card">
+    <h2>Add New Product</h2>
+    <form method="POST">
+      <label>Product Name:</label>
+      <input type="text" name="name" required><br><br>
+
+      <label>Color:</label>
+      <input type="text" name="color" required><br><br>
+
+      <label>Sizes (comma separated):</label>
+      <input type="text" name="sizes" placeholder="36, 37, 38, 39" required><br><br>
+
+      <label>Price:</label>
+      <input type="number" name="price" required><br><br>
+
+      <label>Stock:</label>
+      <input type="number" name="stock" required><br><br>
+
+      <button type="submit">Add Product</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 15px;">
+      <a href="{{ url_for('admin.manage_products') }}" style="color: #9742b8;">← Back to Products</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,26 +1,40 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session
+
 from FlaskProject.services import catalog_service, cart_service, order_service
 
 cart_bp = Blueprint("cart", __name__)
 
 @cart_bp.route("/cart")
 def show_cart():
+    if not session.get('logged_in'):
+        flash("Please login to view your cart.")
+        return redirect(url_for('auth.login'))
+
     cart_items = cart_service.get_cart()
     return render_template("cart.html", cart_items=cart_items)
 
 @cart_bp.route("/cart/add/<int:product_id>")
 def add_to_cart(product_id):
+    if not session.get('logged_in'):
+        flash("Please login to add items to cart.")
+        return redirect(url_for('auth.login'))
+
     products = catalog_service.get_all_products()
     product = next((p for p in products if p["id"] == product_id), None)
 
     if product:
         cart_service.add_to_cart(product)
+        flash(f"{product['name']} added to cart!")
 
     return redirect(url_for("cart.show_cart"))
 
 
 @cart_bp.route("/checkout", methods=["GET", "POST"])
 def checkout():
+    if not session.get('logged_in'):
+        flash("Please login to checkout.")
+        return redirect(url_for('auth.login'))
+
     if request.method == "POST":
         address = request.form["address"]
         payment = request.form["payment"]

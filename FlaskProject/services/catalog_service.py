@@ -2,17 +2,18 @@ from flask import flash
 
 
 class Products:
-    def __init__(self, product_id, name, color, sizes, price, stock):
+    def __init__(self, product_id, name, color, sizes, price, stock, image_url):
         self.product_id = product_id
         self.name = name
         self.color = color
         self.sizes = sizes
         self.price = price
         self.stock = stock
+        self.image_url = image_url
 
 
 products = [
-    {"id": 1, "name": "Nike", "color": "white", "sizes": "36, 37, 39", "price": 60, "stock": 5},
+    {"id": 1, "name": "Nike", "color": "white", "sizes": "36, 37, 39", "price": 60, "stock": 5, "image_url": "/static/photos/Nike_court.webp"},
     {"id": 2, "name": "Puma", "color": "black", "sizes": "36, 37, 38, 40", "price": 80, "stock": 2},
     {"id": 3, "name": "Lasocki", "color": "brown",  "sizes": "37, 39, 41, 42", "price": 40, "stock": 10},
     {"id": 4, "name": "Guess", "color": "red", "sizes": "36, 37, 38, 39", "price": 50, "stock": 1},
@@ -25,7 +26,8 @@ def add_product(product):
         "color": product.product.color,
         "sizes": product.product.sizes,
         "price": product.product.price,
-        "stock": product.product.stock
+        "stock": product.product.stock,
+        "image_url": product.product.image_url
     })
 
 def get_product(product_id):

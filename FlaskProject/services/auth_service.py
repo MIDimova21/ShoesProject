@@ -2,12 +2,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User:
-    def __init__(self, first_name, last_name, email, password, check_password):
+    def __init__(self, first_name, last_name, email, password, check_password, is_admin=False):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.__password = password
         self.check_password = check_password
+        self.is_admin = is_admin
 
     @property
     def password(self):
@@ -23,8 +24,11 @@ class User:
 
 users = {}
 
+admin_user = User("Admin", "User", "admin@gmail.com", "admin123", "admin123", is_admin=True)
+users["admin@gmail.com"] = admin_user
+
 def register(first_name, last_name, email, password, check_password):
-    new_user = User(first_name, last_name, email, password, check_password)
+    new_user = User(first_name, last_name, email, password, check_password, is_admin=False)
     if email in users:
         return False
     users[email] = new_user
@@ -34,7 +38,11 @@ def register(first_name, last_name, email, password, check_password):
 
 def login(email, password):
     if email in users:
-        if password == users[email].password:
-            return True
-    return False
+        user = users[email]
+        if password == user.password:
+            return user
+    return None
+
+def get_user(email):
+    return users.get(email)
 
