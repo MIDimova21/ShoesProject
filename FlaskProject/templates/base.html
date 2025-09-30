@@ -12,17 +12,23 @@
 <body>
     <header>
         <nav>
-            <div class="container_nav">
-                <a href="{{ url_for('catalog.show_catalog') }}"><h1>ShoeBox</h1></a>
-
-                <a href="{{ url_for('auth.register') }}">Регистрация</a> |
-                <a href="{{ url_for('auth.login') }}">Вход</a> |
-                <a href="{{ url_for('catalog.show_catalog') }}">Каталог</a> |
-                <a href="{{ url_for('cart.show_cart') }}">Количка</a>
+          <div class="container_nav">
+            <div class="nav-left">
+              <a href="{{ url_for('catalog.show_catalog') }}"><h1>ShoeBox</h1></a>
+              <form class="search" method="GET" action="{{ url_for('catalog.show_catalog') }}">
+                <input type="text" name="query" placeholder="Търси..." value="{{ search_query or '' }}">
+                <button class="search" type="submit">Търси</button>
+              </form>
             </div>
-
-
+            <div class="nav-right">
+              <a href="{{ url_for('auth.register') }}">Регистрация</a>
+              <a href="{{ url_for('auth.login') }}">Вход</a>
+              <a href="{{ url_for('catalog.show_catalog') }}"> Каталог</a>
+              <a href="{{ url_for('cart.show_cart') }}">🛒 Количка</a>
+            </div>
+          </div>
         </nav>
+        <hr>
     </header>
 
     <main>

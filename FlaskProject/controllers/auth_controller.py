@@ -38,7 +38,3 @@ def login():
 
     return render_template("login.html")
 
-
-@auth_bp.route('/')
-def index():
-    return render_template("base.html")
