@@ -11,16 +11,16 @@
     <h2>Checkout</h2>
 
     <form method="POST">
-      <label for="address">Address:</label>
+      <label for="address">Адрес за доставка:</label>
       <input type="text" id="address" name="address" required>
 
-      <label for="payment">Payment method:</label>
+      <label for="payment">Начин на плащане:</label>
       <select id="payment" name="payment" required>
-        <option value="Credit Card">Credit Card</option>
-        <option value="Cash on Delivery">Cash on Delivery</option>
+        <option value="Credit Card">Дебитна карта</option>
+        <option value="Cash on Delivery">Наложен платеж</option>
       </select>
 
-      <button type="submit">Place Order</button>
+      <button type="submit">Поръчай</button>
     </form>
 
     {% for message in get_flashed_messages() %}

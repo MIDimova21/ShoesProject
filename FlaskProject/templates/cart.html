@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="page-title">Your Cart</h2>
+<h2 class="page-title">Твоята количка</h2>
 
 {% if cart_items %}
   <div class="cart-list">
@@ -15,6 +15,7 @@
         <div class="meta">
           <h3>{{ item.name }}</h3>
           <p>Color: {{ item.color }}</p>
+          <p>Size: {{ item.selected_size }}</p>
           <p>Price: ${{ item.price }}</p>
         </div>
       </div>
@@ -22,14 +23,14 @@
   </div>
 
   <div class="cart-summary">
-    <h3>Summary</h3>
-    <p>Total items: {{ cart_items|length }}</p>
-    <p>Total price: ${{ cart_items | sum(attribute='price') }}</p>
-    <a class="btn-checkout" href="{{ url_for('cart.checkout') }}">Proceed to Checkout</a>
+    <h3>Обобщение</h3>
+    <p>Общ брой продукти: {{ cart_items|length }}</p>
+    <p>Обща стойност: {{ cart_items | sum(attribute='price') }}лв</p>
+    <a class="btn-checkout" href="{{ url_for('cart.checkout') }}">Продължете към плащането</a>
   </div>
 {% else %}
   <div class="empty-cart">
-    <p>Your cart is empty 🛒</p>
+    <p>Количката ви е празна 🛒</p>
   </div>
 {% endif %}
 {% endblock %}

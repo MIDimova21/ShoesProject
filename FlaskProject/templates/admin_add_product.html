@@ -3,33 +3,42 @@
 {% block link %}
         <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 {% endblock %}
 
 {% block content %}
 <div class="form-wrapper">
-  <div class="form-card">
-    <h2>Add New Product</h2>
+  <div class="form-card admin-form">
+    <h2>➕ Добави нов продукт</h2>
     <form method="POST">
-      <label>Product Name:</label>
-      <input type="text" name="name" required><br><br>
+      <label>Име на продукта:</label>
+      <input type="text" name="name" required placeholder="e.g., Nike Air Max">
 
-      <label>Color:</label>
-      <input type="text" name="color" required><br><br>
+      <label>Категория:</label>
+      <select name="category" required>
+        <option value="">-- Избери категория --</option>
+        {% for cat in categories %}
+          <option value="{{ cat }}">{{ cat }}</option>
+        {% endfor %}
+      </select>
 
-      <label>Sizes (comma separated):</label>
-      <input type="text" name="sizes" placeholder="36, 37, 38, 39" required><br><br>
+      <label>Цвят:</label>
+      <input type="text" name="color" required placeholder="e.g., white, black">
 
-      <label>Price:</label>
-      <input type="number" name="price" required><br><br>
+      <label>Размер:</label>
+      <input type="text" name="sizes" placeholder="e.g., 36, 37, 38, 39" required>
 
-      <label>Stock:</label>
-      <input type="number" name="stock" required><br><br>
+      <label>Цена:</label>
+      <input type="number" name="price" required placeholder="e.g., 99">
 
-      <button type="submit">Add Product</button>
+      <label>Количество:</label>
+      <input type="number" name="stock" required placeholder="e.g., 10">
+
+      <button type="submit">Добави продукта</button>
     </form>
 
-    <div style="text-align: center; margin-top: 15px;">
-      <a href="{{ url_for('admin.manage_products') }}" style="color: #9742b8;">← Back to Products</a>
+    <div class="back-link">
+      <a href="{{ url_for('admin.manage_products') }}">← Обратно към продуктите</a>
     </div>
   </div>
 </div>

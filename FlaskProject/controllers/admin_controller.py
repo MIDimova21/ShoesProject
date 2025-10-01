@@ -32,19 +32,24 @@ def manage_products():
 @admin_required
 def add_product():
     if request.method == "POST":
+        sizes = request.form["sizes"].split(",")
+        sizes = [s.strip() for s in sizes]
+
         product_data = {
             "id": len(catalog_service.products) + 1,
             "name": request.form["name"],
             "color": request.form["color"],
-            "sizes": request.form["sizes"],
+            "sizes": sizes,
             "price": int(request.form["price"]),
-            "stock": int(request.form["stock"])
+            "stock": int(request.form["stock"]),
+            "category": request.form["category"]
         }
         catalog_service.products.append(product_data)
-        flash(f"Product {product_data['name']} added successfully!")
+        flash(f"Продукт {product_data['name']} добавен успешно!")
         return redirect(url_for("admin.manage_products"))
 
-    return render_template("admin_add_product.html")
+    categories = catalog_service.get_categories()
+    return render_template("admin_add_product.html", categories=categories)
 
 
 @admin_bp.route("/products/edit/<int:product_id>", methods=["GET", "POST"])
@@ -53,22 +58,27 @@ def edit_product(product_id):
     product = catalog_service.get_product(product_id)
 
     if not product:
-        flash("Product not found!")
+        flash("Продуктът не е открит!")
         return redirect(url_for("admin.manage_products"))
 
     if request.method == "POST":
+        sizes = request.form["sizes"].split(",")
+        sizes = [s.strip() for s in sizes]
+
         catalog_service.update_product(
             product_id,
             name=request.form["name"],
             color=request.form["color"],
-            sizes=request.form["sizes"],
+            sizes=sizes,
             price=int(request.form["price"]),
-            stock=int(request.form["stock"])
+            stock=int(request.form["stock"]),
+            category=request.form["category"]
         )
         flash(f"Product updated successfully!")
         return redirect(url_for("admin.manage_products"))
 
-    return render_template("admin_edit_product.html", product=product)
+    categories = catalog_service.get_categories()
+    return render_template("admin_edit_product.html", product=product, categories=categories)
 
 
 @admin_bp.route("/products/delete/<int:product_id>")

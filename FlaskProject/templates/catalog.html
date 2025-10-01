@@ -6,45 +6,75 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="page-title">Каталог с продукти</h2>
+<div class="catalog-container">
+  <div class="filter-box">
+    <form method="get" action="{{ url_for('catalog.show_catalog') }}">
+      <div class="filter-row">
 
-<form class="filter-bar" method="get" action="{{ url_for('catalog.show_catalog') }}">
-  <h1 class="filter">Филтри:</h1>
-  <label>Цена:</label>
-  <input type="number" name="max_price" value="{{ max_price or '' }}">
+        <select name="category" class="filter-select">
+          <option value="all">Категории</option>
+          {% for cat in categories %}
+            <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+          {% endfor %}
+        </select>
 
-  <label>Размер:</label>
-  <input type="text" name="available_size" value="{{ max_size or '' }}">
-
-  <label>
-    <input class="checkbox" type="checkbox" name="in_stock" {% if in_stock %}checked{% endif %}>
-    Само налични
-  </label>
-
-  <button type="submit">Филтрирай</button>
-</form>
-
-<hr>
-
-<div class="catalog-grid">
-  {% for product in products %}
-    <div class="product-card">
-      <h3 class="product-title">{{ product.name }}</h3>
-      <p class="product-meta">{{ product.color }}</p>
-      <p class="product-meta">Sizes: {{ product.sizes }}</p>
-      <p class="product-meta">Stock: {{ product.stock }}</p>
-      <p class="product-price">${{ product.price }}</p>
-
-      <div class="product-actions">
-        {% if session.logged_in %}
-          <a class="btn-add" href="{{ url_for('cart.add_to_cart', product_id=product.id) }}">Add to Cart</a>
-        {% else %}
-          <a class="btn-add" href="{{ url_for('auth.login') }}">Login to Buy</a>
-        {% endif %}
+        <select name="available_size" class="filter-select">
+          <option value="">Размери</option>
+          <option value="36">36</option>
+          <option value="37">37</option>
+          <option value="38">38</option>
+          <option value="39">39</option>
+          <option value="40">40</option>
+          <option value="41">41</option>
+          <option value="42">42</option>
+          <option value="43">43</option>
+        </select>
       </div>
 
-    </div>
-    <hr>
-  {% endfor %}
+      <div class="filter-row">
+        <input type="number" name="max_price" placeholder="Цена" value="{{ цена or '' }}" class="filter-input price-input">
+        <label>
+          <input class="checkbox" type="checkbox" name="in_stock" {% if in_stock %}checked{% endif %}>Само налични
+        </label>
+        <button type="submit" class="btn-filter">Филтрирай</button>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="products-grid">
+    {% for product in products %}
+      <div class="product-card-modern">
+        <div class="product-image">
+          <img src="{{ product.image_url }}" alt="photo">
+        </div>
+
+        <div class="product-info">
+          <h3 class="product-title">{{ product.name }}</h3>
+          <p class="product-category">{{ product.category }}</p>
+          <div class="product-details">
+            <span class="detail-badge">🎨 {{ product.color }}</span>
+            <span class="detail-badge">📏 {{ product.sizes|join(', ') }}</span>
+            <span class="detail-badge">📦 Stock: {{ product.stock }}</span>
+          </div>
+          <p class="product-price-modern">{{ product.price }}лв</p>
+
+          {% if session.logged_in %}
+            <form method="POST" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}" class="add-to-cart-form">
+              <select name="size" required class="size-dropdown">
+                <option value="">Избери размер</option>
+                {% for size in product.sizes %}
+                  <option value="{{ size }}">Размер {{ size }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn-add-modern">Добави към количката</button>
+            </form>
+          {% else %}
+            <a href="{{ url_for('auth.login') }}" class="btn-login-modern">Регистрирай се за да пазаруваш</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

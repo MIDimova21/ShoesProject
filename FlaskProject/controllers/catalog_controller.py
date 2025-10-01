@@ -10,14 +10,18 @@ def show_catalog():
     max_price = request.args.get("max_price", type=int)
     available_size = request.args.get("available_size")
     in_stock = request.args.get("in_stock") == "on"
+    category = request.args.get("category")
 
     search = catalog_service.search_products(query)
-    filtered = catalog_service.filter_products(search, max_price, available_size, in_stock)
+    filtered = catalog_service.filter_products(search, max_price, available_size, in_stock, category)
+    categories = catalog_service.get_categories()
 
     return render_template(
         "catalog.html",
         products=filtered,
         search_query=query,
         max_price=max_price,
-        in_stock=in_stock
+        in_stock=in_stock,
+        categories=categories,
+        selected_category=category
     )

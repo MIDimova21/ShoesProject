@@ -2,7 +2,7 @@ from flask import flash
 
 
 class Products:
-    def __init__(self, product_id, name, color, sizes, price, stock, image_url):
+    def __init__(self, product_id, name, color, sizes, price, stock, image_url, category):
         self.product_id = product_id
         self.name = name
         self.color = color
@@ -10,52 +10,36 @@ class Products:
         self.price = price
         self.stock = stock
         self.image_url = image_url
+        self.category = category
 
 
 products = [
-    {"id": 1, "name": "Nike", "color": "white", "sizes": "36, 37, 39", "price": 60, "stock": 5, "image_url": "/static/photos/Nike_court.webp"},
-    {"id": 2, "name": "Puma", "color": "black", "sizes": "36, 37, 38, 40", "price": 80, "stock": 2},
-    {"id": 3, "name": "Lasocki", "color": "brown",  "sizes": "37, 39, 41, 42", "price": 40, "stock": 10},
-    {"id": 4, "name": "Guess", "color": "red", "sizes": "36, 37, 38, 39", "price": 50, "stock": 1},
-]
+    {"id": 1, "name": "Nike Air Max", "color": "бели", "sizes": ["36", "37", "39"], "price": 120, "stock": 5, "image_url": "/static/images/NikeAirMax.webp", "category": "Маратонки"},
+    {"id": 2, "name": "Clara Barson", "color": "черни", "sizes": ["36", "37", "38", "39", "40"], "price": 75, "stock": 20, "image_url": "/static/images/Clara.webp", "category": "Боти"},
+    {"id": 3, "name": "Puma RS-X", "color": "черни", "sizes": ["36", "37", "38", "40"], "price": 160, "stock": 2, "image_url": "/static/images/PumaRSX.webp", "category": "Маратонки"},
+    {"id": 4, "name": "Lasocki Classic", "color": "кафяви", "sizes": ["37", "39", "41", "42"], "price": 50, "stock": 10, "image_url": "/static/images/lasocki.jpg", "category": "Официални"},
+    {"id": 5, "name": "HUGO", "color": "черни", "sizes": ["40", "41", "42", "43"], "price": 300, "stock": 20, "image_url": "/static/images/Hugo.webp", "category": "Боти"},
+    {"id": 6, "name": "Guess Heels", "color": "червени", "sizes": ["36", "37", "38", "39"], "price": 400, "stock": 1, "image_url": "/static/images/GuessHeels.jpg", "category": "Официални"},
+    {"id": 7, "name": "Adidas Ultraboost", "color": "сини", "sizes": ["38", "39", "40", "41"], "price": 125, "stock": 8, "image_url": "/static/images/Adidas.avif", "category": "Маратонки"},
+    {"id": 8, "name": "Timberland Boots", "color": "кафяви", "sizes": ["40", "41", "42", "43"], "price": 120, "stock": 4, "image_url": "/static/images/Timberland.jpg", "category": "Боти"},
+    {"id": 9, "name": "Converse All Star", "color": "черни", "sizes": ["36", "37", "38", "39", "40"], "price": 100, "stock": 15, "image_url": "/static/images/Converse.webp", "category": "Кецове"},
+    {"id": 10, "name": "Beverly Hills Polo Club ", "color": "розови", "sizes": ["37", "38", "39"], "price": 77, "stock": 12, "image_url": "/static/images/Polo.webp", "category": "Кецове"},
+    {"id": 11, "name": "Steve Madden Pumps", "color": "бежави", "sizes": ["36", "37", "38"], "price": 71, "stock": 3, "image_url": "/static/images/SteveMadden.jpg", "category": "Официални"},
+    {"id": 12, "name": "EA7 Emporio Armani", "color": "розови", "sizes": ["36", "37", "38", "39"], "price": 75, "stock": 19, "image_url": "/static/images/ЕА7.webp", "category": "Чехли"},
+    {"id": 12, "name": "Nike", "color": "черни", "sizes": ["39", "40", "41"], "price": 55, "stock": 23, "image_url": "/static/images/NikeOne.webp", "category": "Чехли"},
 
-def add_product(product):
-    products.append({
-        "id": product.product.id,
-        "name": product.product.name,
-        "color": product.product.color,
-        "sizes": product.product.sizes,
-        "price": product.product.price,
-        "stock": product.product.stock,
-        "image_url": product.product.image_url
-    })
+]
 
 def get_product(product_id):
     for product in products:
         if product_id == product["id"]:
             return product
-    flash("Product Not Found!", "danger")
+    flash("Продуктът не е открит!", "danger")
+    return None
 
 
 def get_all_products():
     return products
-
-
-def update_product(product_id, **kwargs):
-    product = get_product(product_id)
-    if not product:
-        return None
-    for key, value in kwargs.items():
-        if key in product:
-            product[key] = value
-    return product
-
-
-def delete_product(product_id):
-    product = get_product(product_id)
-    if product:
-        products.remove(product)
-
 
 
 def search_products(query):
@@ -70,25 +54,26 @@ def search_products(query):
         return result
     return products
 
-def filter_products(product_list, max_price, available_size, in_stock):
-    result = []
+
+def filter_products(product_list, max_price, available_size, in_stock, category):
+    result = product_list.copy()
 
     if max_price:
-        for product in products:
-            if product["price"] <= max_price:
-                result.append(product)
-        return result
+        result = [p for p in result if p["price"] <= max_price]
 
     if available_size:
-        for product in products:
-            if available_size in product["sizes"]:
-                result.append(product)
-        return result
+        result = [p for p in result if available_size in p["sizes"]]
 
     if in_stock:
-        for product in products:
-            if product["stock"] > 0:
-                result.append(product)
-        return result
+        result = [p for p in result if p["stock"] > 0]
 
-    return product_list
+    if category and category != "all":
+        result = [p for p in result if p["category"] == category]
+
+    return result
+
+def get_categories():
+    categories = set()
+    for product in products:
+        categories.add(product["category"])
+    return sorted(list(categories))

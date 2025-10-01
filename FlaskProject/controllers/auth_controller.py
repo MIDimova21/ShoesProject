@@ -14,12 +14,12 @@ def register():
 
         if password == password_check:
             if auth_service.register(first_name, last_name, email, password, password_check):
-                flash("Registered successfully! You can now log in.")
+                flash("Успешна регистрация!Моля влезте в профила си")
                 return redirect(url_for("auth.login"))
             else:
-                flash("You already have an account.")
+                flash("Вече имате профил с този имейл.")
         else:
-            flash("Passwords don't match.")
+            flash("Паролата не съвпада.")
 
     return render_template("register.html")
 
@@ -37,16 +37,14 @@ def login():
             session['is_admin'] = user.is_admin
             session['logged_in'] = True
 
-            flash(f"Welcome back, {user.first_name}!")
             return redirect(url_for("catalog.show_catalog"))
         else:
-            flash("Invalid email or password.")
+            flash("Грешен илейл или парола.")
 
     return render_template("login.html")
 
 @auth_bp.route('/logout')
 def logout():
     session.clear()
-    flash("You have been logged out.")
     return redirect(url_for("auth.login"))
 

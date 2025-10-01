@@ -8,24 +8,24 @@
 {% block content %}
 <div class="form-wrapper">
   <div class="form-card">
-    <h2>Register</h2>
+    <h2>Регистрация</h2>
     <form method="POST">
-      <label>First Name:</label>
+      <label>Име:</label>
       <input type="text" name="first_name" required><br><br>
 
-      <label>Last Name:</label>
+      <label>Фамилия:</label>
       <input type="text" name="last_name" required><br><br>
 
-      <label>Email:</label>
+      <label>Имейл:</label>
       <input type="email" name="email" required><br><br>
 
-      <label>Password:</label>
+      <label>Парола:</label>
       <input type="password" name="password" required><br><br>
 
-      <label>Check Password:</label>
+      <label>Повторете паролата:</label>
       <input type="password" name="check_password" required><br><br>
 
-      <button type="submit">Register</button>
+      <button type="submit">Регистрация</button>
     </form>
 
     {% for message in get_flashed_messages() %}

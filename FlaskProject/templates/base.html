@@ -15,18 +15,20 @@
           <div class="container_nav">
             <div class="nav-left">
               <a href="{{ url_for('catalog.show_catalog') }}"><h1>ShoeBox</h1></a>
-              <form class="search" method="GET" action="{{ url_for('catalog.show_catalog') }}">
-                <input type="text" name="query" placeholder="Търси..." value="{{ search_query or '' }}">
-                <button class="search" type="submit">Търси</button>
-              </form>
+
+              {% if session.logged_in %}
+                <form class="search" method="GET" action="{{ url_for('catalog.show_catalog') }}">
+                  <input type="text" name="query" placeholder="Търси..." value="{{ search_query or '' }}">
+                  <button class="search" type="submit">Търси</button>
+                </form>
+              {% endif %}
             </div>
             <div class="nav-right">
               {% if session.logged_in %}
-                <span>Hello, {{ session.user_name }}!</span>
                 <a href="{{ url_for('catalog.show_catalog') }}">Каталог</a>
                 <a href="{{ url_for('cart.show_cart') }}">🛒 Количка</a>
                 {% if session.is_admin %}
-                  <a href="{{ url_for('admin.manage_products') }}">⚙️ Admin</a>
+                  <a href="{{ url_for('admin.manage_products') }}">⚙️ Админ</a>
                 {% endif %}
                 <a href="{{ url_for('auth.logout') }}">Изход</a>
               {% else %}
@@ -41,16 +43,6 @@
     </header>
 
     <main>
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <div class="flash-messages">
-              {% for message in messages %}
-                <div class="flash flash-info">{{ message }}</div>
-              {% endfor %}
-            </div>
-          {% endif %}
-        {% endwith %}
-
         {% block content %}{% endblock %}
     </main>
 

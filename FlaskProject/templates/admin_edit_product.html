@@ -3,33 +3,46 @@
 {% block link %}
         <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 {% endblock %}
 
 {% block content %}
 <div class="form-wrapper">
-  <div class="form-card">
-    <h2>Edit Product</h2>
+  <div class="form-card admin-form">
+    <h2>✏️ Редактирай продукт</h2>
     <form method="POST">
-      <label>Product Name:</label>
-      <input type="text" name="name" value="{{ product.name }}" required><br><br>
+      <label>Име на продукта:</label>
+      <input type="text" name="name" value="{{ product.name }}" required>
 
-      <label>Color:</label>
-      <input type="text" name="color" value="{{ product.color }}" required><br><br>
+      <label>Категория:</label>
+      <select name="category" required>
+        {% for cat in categories %}
+          <option value="{{ cat }}" {% if product.category == cat %}selected{% endif %}>{{ cat }}</option>
+        {% endfor %}
+        <option value="Boots" {% if product.category == 'Boots' %}selected{% endif %}>Боти</option>
+        <option value="Sneakers" {% if product.category == 'Sneakers' %}selected{% endif %}>Маратонки</option>
+        <option value="Heels" {% if product.category == 'Heels' %}selected{% endif %}>Официални</option>
+        <option value="Formal" {% if product.category == 'Formal' %}selected{% endif %}>Кецове</option>
+        <option value="Sandals" {% if product.category == 'Sandals' %}selected{% endif %}>Чехли</option>
+      </select>
 
-      <label>Sizes (comma separated):</label>
-      <input type="text" name="sizes" value="{{ product.sizes }}" required><br><br>
+      <label>Цвят:</label>
+      <input type="text" name="color" value="{{ product.color }}" required>
 
-      <label>Price:</label>
-      <input type="number" name="price" value="{{ product.price }}" required><br><br>
+      <label>Размер:</label>
+      <input type="text" name="sizes" value="{{ product.sizes|join(', ') }}" required>
 
-      <label>Stock:</label>
-      <input type="number" name="stock" value="{{ product.stock }}" required><br><br>
+      <label>Цена:</label>
+      <input type="number" name="price" value="{{ product.price }}" required>
 
-      <button type="submit">Update Product</button>
+      <label>Количество:</label>
+      <input type="number" name="stock" value="{{ product.stock }}" required>
+
+      <button type="submit">Редактирай</button>
     </form>
 
-    <div style="text-align: center; margin-top: 15px;">
-      <a href="{{ url_for('admin.manage_products') }}" style="color: #9742b8;">← Back to Products</a>
+    <div class="back-link">
+      <a href="{{ url_for('admin.manage_products') }}">← Обратно към продуктите</a>
     </div>
   </div>
 </div>
