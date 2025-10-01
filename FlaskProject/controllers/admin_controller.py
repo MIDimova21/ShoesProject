@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from FlaskProject.services import catalog_service
+from FlaskProject.services.catalog_service import Trainers, Boots, Formal, Sneakers, Sandals
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -34,18 +35,31 @@ def add_product():
     if request.method == "POST":
         sizes = request.form["sizes"].split(",")
         sizes = [s.strip() for s in sizes]
+        id = len(catalog_service.products) + 1
+        name = request.form["name"]
+        color = request.form["color"]
+        price = int(request.form["price"])
+        stock = int(request.form["stock"])
+        image = ""
+        category = request.form["category"]
 
-        product_data = {
-            "id": len(catalog_service.products) + 1,
-            "name": request.form["name"],
-            "color": request.form["color"],
-            "sizes": sizes,
-            "price": int(request.form["price"]),
-            "stock": int(request.form["stock"]),
-            "category": request.form["category"]
-        }
-        catalog_service.products.append(product_data)
-        flash(f"Продукт {product_data['name']} добавен успешно!")
+        if category == "Маратонки":
+            new_product = Trainers(id, name, color, sizes, price, stock, image)
+            new_product.add_product()
+        elif category == "Боти":
+            new_product = Boots(id, name, color, sizes, price, stock, image)
+            new_product.add_product()
+        elif category == "Официални":
+            new_product = Formal(id, name, color, sizes, price, stock, image)
+            new_product.add_product()
+        elif category == "Кецове":
+            new_product = Sneakers(id, name, color, sizes, price, stock, image)
+            new_product.add_product()
+        elif category == "Чехли":
+            new_product = Sandals(id, name, color, sizes, price, stock, image)
+            new_product.add_product()
+
+        flash(f"Продуктът е добавен успешно!")
         return redirect(url_for("admin.manage_products"))
 
     categories = catalog_service.get_categories()

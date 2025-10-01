@@ -1,7 +1,6 @@
 from flask import flash
 
-
-class Products:
+class Products():
     def __init__(self, product_id, name, color, sizes, price, stock, image_url, category):
         self.product_id = product_id
         self.name = name
@@ -11,6 +10,42 @@ class Products:
         self.stock = stock
         self.image_url = image_url
         self.category = category
+
+    def add_product(self):
+        added_data = {
+            "id": len(products) + 1,
+            "name": self.name,
+            "color": self.color,
+            "sizes": self.sizes,
+            "price": self.price,
+            "stock": self.stock,
+            "category": self.category
+        }
+        products.append(added_data)
+
+class Trainers(Products):
+    def __init__(self, product_id, name, color, sizes, price, stock, image_url):
+        super().__init__(product_id, name, color, sizes, price, stock, image_url, category="Mаратонки")
+
+
+class Boots(Products):
+    def __init__(self, product_id, name, color, sizes, price, stock, image_url):
+        super().__init__(product_id, name, color, sizes, price, stock, image_url, category="Боти")
+
+
+class Formal(Products):
+    def __init__(self, product_id, name, color, sizes, price, stock, image_url):
+        super().__init__(product_id, name, color, sizes, price, stock, image_url, category="Официални")
+
+
+class Sneakers(Products):
+    def __init__(self, product_id, name, color, sizes, price, stock, image_url):
+        super().__init__(product_id, name, color, sizes, price, stock, image_url, category="Кецове")
+
+
+class Sandals(Products):
+    def __init__(self, product_id, name, color, sizes, price, stock, image_url):
+        super().__init__(product_id, name, color, sizes, price, stock, image_url, category="Чехли")
 
 
 products = [
@@ -55,20 +90,20 @@ def search_products(query):
     return products
 
 
-def filter_products(product_list, max_price, available_size, in_stock, category):
+def filter_products(product_list, max_price=None, available_size=None, in_stock=False, category=None):
     result = product_list.copy()
 
     if max_price:
-        result = [p for p in result if p["price"] <= max_price]
+        result = list(filter(lambda p: p["price"] <= max_price, result))
 
     if available_size:
-        result = [p for p in result if available_size in p["sizes"]]
+        result = list(filter(lambda p: available_size in p["sizes"], result))
 
     if in_stock:
-        result = [p for p in result if p["stock"] > 0]
+        result = list(filter(lambda p: p["stock"] > 0, result))
 
     if category and category != "all":
-        result = [p for p in result if p["category"] == category]
+        result = list(filter(lambda p: p["category"] == category, result))
 
     return result
 
