@@ -1,6 +1,6 @@
 from flask import flash
 
-class Products():
+class Products:
     def __init__(self, product_id, name, color, sizes, price, stock, image_url, category):
         self.product_id = product_id
         self.name = name
@@ -75,6 +75,21 @@ def get_product(product_id):
 
 def get_all_products():
     return products
+
+def update_product(product_id, **kwargs):
+    product = get_product(product_id)
+    if not product:
+        return None
+    for key, value in kwargs.items():
+        if key in product:
+            product[key] = value
+    return product
+
+
+def delete_product(product_id):
+    product = get_product(product_id)
+    if product:
+        products.remove(product)
 
 
 def search_products(query):
