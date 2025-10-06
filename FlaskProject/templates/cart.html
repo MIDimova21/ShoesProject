@@ -13,17 +13,20 @@
     {% for item in cart_items %}
       <div class="cart-item">
         <div class="meta">
+            <div class="product-image">
+                <img src="{{ item.image_url }}" alt="photo">
+            </div>
           <h3>{{ item.name }}</h3>
-          <p>Color: {{ item.color }}</p>
-          <p>Size: {{ item.selected_size }}</p>
-          <p>Price: ${{ item.price }}</p>
+          <p>Цвят: {{ item.color }}</p>
+          <p>Размер: {{ item.selected_size }}</p>
+          <p>Цена: {{ item.price }}лв</p>
         </div>
       </div>
     {% endfor %}
   </div>
 
   <div class="cart-summary">
-    <h3>Обобщение</h3>
+    <h3>Обобщение:</h3>
     <p>Общ брой продукти: {{ cart_items|length }}</p>
     <p>Обща стойност: {{ cart_items | sum(attribute='price') }}лв</p>
     <a class="btn-checkout" href="{{ url_for('cart.checkout') }}">Продължете към плащането</a>

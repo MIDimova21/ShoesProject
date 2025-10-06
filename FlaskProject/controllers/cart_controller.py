@@ -13,7 +13,7 @@ def show_cart():
     cart_items = cart_service.get_cart()
     return render_template("cart.html", cart_items=cart_items)
 
-@cart_bp.route("/cart/add/<int:product_id>")
+@cart_bp.route("/cart/add/<int:product_id>", methods=["GET", "POST"])
 def add_to_cart(product_id):
     if not session.get('logged_in'):
         flash("Влезте във профила си, за да добавите продукти в количката.")

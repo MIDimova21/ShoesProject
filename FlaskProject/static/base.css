@@ -57,7 +57,7 @@ header {
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 20px;
-  min-width: 680px;
+  min-width: 600px;
     height: 25px;
     margin-left: 40px;
   transition: border 0.2s, box-shadow 0.2s;
