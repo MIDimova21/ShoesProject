@@ -54,17 +54,17 @@
           <p class="product-category">{{ product.category }}</p>
           <div class="product-details">
             <span class="detail-badge">🎨 {{ product.color }}</span>
-            <span class="detail-badge">📏 {{ product.sizes|join(', ') }}</span>
+            <span class="detail-badge">📏 {{ product.sizes }}</span>
             <span class="detail-badge">📦 Stock: {{ product.stock }}</span>
           </div>
           <p class="product-price-modern">{{ product.price }}лв</p>
 
           {% if session.logged_in %}
-            <form method="POST" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}" class="add-to-cart-form">
+            <form method="POST" action="{{ url_for('cart.add_to_cart', product_id=product.product_id) }}" class="add-to-cart-form">
               <select name="size" required class="size-dropdown">
                 <option value="">Избери размер</option>
-                {% for size in product.sizes %}
-                  <option value="{{ size }}">Размер {{ size }}</option>
+                {% for size in product.sizes.split(",") %}
+                  <option value="{{ size }}">Размер {{ size.strip() }}</option>
                 {% endfor %}
               </select>
               <button type="submit" class="btn-add-modern">Добави към количката</button>

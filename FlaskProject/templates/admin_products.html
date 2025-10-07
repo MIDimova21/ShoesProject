@@ -25,14 +25,14 @@
           <p class="product-category">{{ product.category }}</p>
           <div class="product-details">
             <span class="detail-badge">🎨 {{ product.color }}</span>
-            <span class="detail-badge">📏 {{ product.sizes|join(', ') }}</span>
+            <span class="detail-badge">📏 {{ product.sizes }}</span>
             <span class="detail-badge">📦 Stock: {{ product.stock }}</span>
           </div>
           <p class="product-price-modern">{{ product.price }}лв</p>
 
           <div class="admin-actions">
-            <a class="btn-edit" href="{{ url_for('admin.edit_product', product_id=product.id) }}">✏️ Редактирай</a>
-            <a class="btn-delete" href="{{ url_for('admin.delete_product', product_id=product.id) }}" onclick="return confirm('Are you sure you want to delete this product?')">🗑️ Изтрий</a>
+            <a class="btn-edit" href="{{ url_for('admin.edit_product', product_id=product.product_id) }}">✏️ Редактирай</a>
+            <a class="btn-delete" href="{{ url_for('admin.delete_product', product_id=product.product_id) }}" onclick="return confirm('Are you sure you want to delete this product?')">🗑️ Изтрий</a>
           </div>
         </div>
       </div>

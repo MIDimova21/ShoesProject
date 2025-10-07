@@ -1,14 +1,15 @@
 from werkzeug.security import generate_password_hash, check_password_hash
+from FlaskProject import db
 
 
-class User:
-    def __init__(self, first_name, last_name, email, password, check_password, is_admin=False):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.__password = password
-        self.check_password = check_password
-        self.is_admin = is_admin
+class User(db.Model):
+    __tablename__ = 'users'
+    user_id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    email = db.Column(db.String(80), unique=True, nullable=False)
+    __password = db.Column('password', db.String(255), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
 
     @property
     def password(self):
@@ -19,30 +20,5 @@ class User:
         self.__password = generate_password_hash(password)
 
     def check_password(self, password):
-        return check_password_hash(password, self.__password)
-
-
-users = {}
-
-admin_user = User("Admin", "User", "admin@gmail.com", "admin123", "admin123", is_admin=True)
-users["admin@gmail.com"] = admin_user
-
-def register(first_name, last_name, email, password, check_password):
-    new_user = User(first_name, last_name, email, password, check_password, is_admin=False)
-    if email in users:
-        return False
-    users[email] = new_user
-    print(f"We sent you confirmation email to {email}")
-    return True
-
-
-def login(email, password):
-    if email in users:
-        user = users[email]
-        if password == user.password:
-            return user
-    return None
-
-def get_user(email):
-    return users.get(email)
+        return check_password_hash(self.__password, password)
 

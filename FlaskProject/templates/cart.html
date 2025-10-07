@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block link %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -13,22 +13,28 @@
     {% for item in cart_items %}
       <div class="cart-item">
         <div class="meta">
-            <div class="product-image">
-                <img src="{{ item.image_url }}" alt="photo">
-            </div>
-          <h3>{{ item.name }}</h3>
-          <p>Цвят: {{ item.color }}</p>
-          <p>Размер: {{ item.selected_size }}</p>
-          <p>Цена: {{ item.price }}лв</p>
+          <div class="product-image">
+                <img src="{{ item.product.image_url }}" alt="photo">
+          </div>
+          <h3>{{ item.product.name }}</h3>
+          <p>Цвят: {{ item.product.color }}</p>
+          <p>Размер: {{ item.size }}</p>
+          <p>Цена: {{ item.product.price }}лв</p>
         </div>
       </div>
     {% endfor %}
   </div>
 
   <div class="cart-summary">
-    <h3>Обобщение:</h3>
-    <p>Общ брой продукти: {{ cart_items|length }}</p>
-    <p>Обща стойност: {{ cart_items | sum(attribute='price') }}лв</p>
+    <h3>Обобщение</h3>
+    <p>Общ брой продукти: {{ cart_items | sum(attribute='quantity') }}</p>
+
+
+    {% for item in cart_items %}
+      <p>Обща стойност: {{ item.product.price }}лв</p>
+    {% endfor %}
+
+
     <a class="btn-checkout" href="{{ url_for('cart.checkout') }}">Продължете към плащането</a>
   </div>
 {% else %}
