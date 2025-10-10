@@ -1,6 +1,4 @@
 from flask import Blueprint, render_template, request
-
-from FlaskProject.services import catalog_service
 from FlaskProject.services.catalog_service import Products
 
 catalog_bp = Blueprint('catalog', __name__)
@@ -48,7 +46,6 @@ def get_filtered_products(query=None, max_price=None, available_size=None, in_st
 
     products = products_query.all()
 
-    # Filter by available_size (comma-separated string)
     if available_size:
         filtered_products = []
         for p in products:
@@ -59,3 +56,8 @@ def get_filtered_products(query=None, max_price=None, available_size=None, in_st
         products = filtered_products
 
     return products
+
+@catalog_bp.route("/add_review", methods=['GET', 'POST'])
+def add_review():
+    return render_template("reviews.html")
+

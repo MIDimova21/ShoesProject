@@ -3,6 +3,7 @@
 {% block link %}
         <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='catalog.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='reviews.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -58,6 +59,11 @@
             <span class="detail-badge">📦 Stock: {{ product.stock }}</span>
           </div>
           <p class="product-price-modern">{{ product.price }}лв</p>
+            <a href="{{ url_for('catalog.add_review') }}">
+                <button type="submit" class="btn-add-modern">Ревю</button>
+            </a>
+
+
 
           {% if session.logged_in %}
             <form method="POST" action="{{ url_for('cart.add_to_cart', product_id=product.product_id) }}" class="add-to-cart-form">

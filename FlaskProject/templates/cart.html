@@ -34,7 +34,7 @@
       <p>Обща стойност: {{ item.product.price }}лв</p>
     {% endfor %}
 
-
+    <a class="btn-checkout" href="">Изтеглете PDF</a>
     <a class="btn-checkout" href="{{ url_for('cart.checkout') }}">Продължете към плащането</a>
   </div>
 {% else %}

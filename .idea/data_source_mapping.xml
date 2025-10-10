@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="das://367c2701-e077-46a3-b211-4c37c6151933/schema/main/table/products.sql" value="367c2701-e077-46a3-b211-4c37c6151933" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/367c2701-e077-46a3-b211-4c37c6151933/console.sql" value="367c2701-e077-46a3-b211-4c37c6151933" />
+  </component>
+</project>

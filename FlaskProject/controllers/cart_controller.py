@@ -12,7 +12,6 @@ def show_cart():
 
     cart_items = cart_service.get_cart()
 
-    # Fetch full product objects from database
     products_in_cart = []
     for item in cart_items:
         product = Products.query.get(item["product_id"])

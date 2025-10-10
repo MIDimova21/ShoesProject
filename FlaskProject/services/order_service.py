@@ -31,18 +31,18 @@ def create_order(address, payment_method):
 
     order = Order(address=address, payment_method=payment_method)
     db.session.add(order)
-    db.session.flush()  # Get order.id
+    db.session.flush()
 
     for item in cart:
         product = Products.query.get(item["product_id"])
         if not product or product.stock <= 0:
             continue
 
-        # Decrease stock
+
         product.stock -= item.get("quantity", 1)
         db.session.add(product)
 
-        # Add order item
+
         order_item = OrderItem(
             order_id=order.id,
             product_id=product.product_id,
@@ -54,7 +54,7 @@ def create_order(address, payment_method):
 
     db.session.commit()
 
-    # Clear cart
+
     session["cart"] = []
     session.modified = True
 

@@ -1,0 +1,13 @@
+.star-rating {
+    padding: 10px;
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.star-rating .star:hover,
+.star-rating .star.hovered,
+.star-rating .star.selected {
+  color: gold;
+}
+
