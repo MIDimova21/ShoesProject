@@ -1,9 +1,11 @@
 from flask import Flask
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 
 db = SQLAlchemy()
 bootstrap = Bootstrap()
+login_manager = LoginManager()
 
 def create_app(config):
     app = Flask(__name__)
@@ -12,6 +14,7 @@ def create_app(config):
 
     db.init_app(app)
     bootstrap.init_app(app)
+    login_manager.init_app(app)
     """"
 
     from services import auth_service, catalog_service, order_service

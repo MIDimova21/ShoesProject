@@ -56,7 +56,7 @@
           <div class="product-details">
             <span class="detail-badge">🎨 {{ product.color }}</span>
             <span class="detail-badge">📏 {{ product.sizes }}</span>
-            <span class="detail-badge">📦 Stock: {{ product.stock }}</span>
+            <span class="detail-badge">📦 Наличност: {{ product.stock }} броя</span>
           </div>
           <p class="product-price-modern">{{ product.price }}лв</p>
             <a href="{{ url_for('catalog.add_review') }}">
@@ -65,7 +65,7 @@
 
 
 
-          {% if session.logged_in %}
+          {% if current_user.is_authenticated %}
             <form method="POST" action="{{ url_for('cart.add_to_cart', product_id=product.product_id) }}" class="add-to-cart-form">
               <select name="size" required class="size-dropdown">
                 <option value="">Избери размер</option>

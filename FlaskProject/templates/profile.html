@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block link %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="settings-container">
+    <div class="settings-form">
+        <h2>Профил</h2>
+        <div class="profile-picture-container">
+          <img src="{{ url_for('static', filename='images/' ~ current_user ~ '_pfp.jpg') }}"
+               onerror="this.src='{{ url_for('static', filename='images/account.png') }}'"
+               alt="Profile Picture" class="profile-picture">
+        </div>
+        <form method="POST" action="{{ url_for('auth.upload_picture') }}" enctype="multipart/form-data">
+          <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required style="display: none;">
+          <label for="profile_picture" class="file-upload-label">Изберете нова снимка</label>
+          <button type="submit">Сменете снимката</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+

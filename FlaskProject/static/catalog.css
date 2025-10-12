@@ -188,7 +188,7 @@
 
 .btn-add-modern {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   background: #9742b8;
   color: white;
   border: none;
@@ -197,6 +197,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  margin-bottom: 10px;
 }
 
 .btn-add-modern:hover {

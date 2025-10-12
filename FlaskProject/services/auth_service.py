@@ -1,8 +1,9 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from FlaskProject import db
+from flask_login import UserMixin
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50))
@@ -10,6 +11,9 @@ class User(db.Model):
     email = db.Column(db.String(80), unique=True, nullable=False)
     __password = db.Column('password', db.String(255), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+
+    def get_id(self):
+        return str(self.user_id)
 
     @property
     def password(self):
