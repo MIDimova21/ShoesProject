@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(80), unique=True, nullable=False)
     __password = db.Column('password', db.String(255), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+    is_picture_approved = db.Column(db.Boolean, default=False)
 
     def get_id(self):
         return str(self.user_id)

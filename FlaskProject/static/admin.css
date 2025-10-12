@@ -22,9 +22,9 @@
   margin: 0;
 }
 
-.btn-add-product {
+.btn-add-product, .btn-approve-photo, .btn-reject-photo {
   padding: 14px 28px;
-  background: #10b981;
+  background: #9742b8;
   color: white;
   border: none;
   border-radius: 10px;
@@ -38,10 +38,13 @@
   gap: 8px;
 }
 
-.btn-add-product:hover {
-  background: #059669;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+.btn-approve-photo {
+  background: green;
+}
+
+.btn-reject-photo {
+  background: #ef4444;
+  margin-left: -200px;
 }
 
 .product-details {

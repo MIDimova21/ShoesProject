@@ -10,7 +10,6 @@
     <div class="settings-form">
         <h2>Профил</h2>
 
-        <!-- Display flash messages -->
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             {% for message in messages %}
@@ -19,12 +18,18 @@
           {% endif %}
         {% endwith %}
 
+        {% if current_user.is_picture_approved == True %}
         <div class="profile-picture-container">
             <img src="{{ url_for('static', filename='images/' ~ current_user.first_name ~ '_pfp.png') }}"
                onerror="this.src='{{ url_for('static', filename='images/account.png') }}'"
                alt="Profile Picture"
                class="profile-picture">
         </div>
+        {% else %}
+        <div class="profile-picture-container">
+            <img src="{{ url_for('static', filename='images/account.png') }}">
+        </div>
+        {% endif %}
 
         <form method="POST" action="{{ url_for('auth.upload_picture') }}" enctype="multipart/form-data">
           <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required style="display: none;">

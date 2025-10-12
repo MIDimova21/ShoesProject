@@ -8,6 +8,13 @@
 
 {% block content %}
 <div class="admin-container">
+
+  <div class="admin-header">
+    <h2 class="admin-title">📷 Управление на профилни снимки</h2>
+    <a href="{{ url_for('admin.approve_picture') }}" class="btn-approve-photo">Удобри снимката</a>
+    <a href="{{ url_for('admin.reject_picture') }}" class="btn-reject-photo">Откажи снимката</a>
+  </div>
+
   <div class="admin-header">
     <h2 class="admin-title">⚙️ Управление на продуктите</h2>
     <a href="{{ url_for('admin.add_product') }}" class="btn-add-product">➕ Добави нов продукт</a>

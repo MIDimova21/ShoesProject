@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from FlaskProject import db
+from FlaskProject.services.auth_service import User
 
 from FlaskProject.services.catalog_service import Products, Trainers, Boots, Formal, Sneakers, Sandals
 
@@ -84,5 +85,22 @@ def delete_product(product_id):
     else:
         flash("Продуктът не беше открит!")
 
+    return redirect(url_for("admin.manage_products"))
+
+
+@admin_bp.route("user/approve/picture")
+def approve_picture():
+    users = User.query.all()
+    for user in users:
+        user.is_picture_approved = True
+    db.session.commit()
+    return redirect(url_for("admin.manage_products"))
+
+@admin_bp.route("user/reject/picture")
+def reject_picture():
+    users = User.query.all()
+    for user in users:
+        user.is_picture_approved = False
+    db.session.commit()
     return redirect(url_for("admin.manage_products"))
 
