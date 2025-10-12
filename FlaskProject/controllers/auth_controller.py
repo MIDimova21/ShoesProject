@@ -1,7 +1,7 @@
 import os
 
 from flask import Blueprint, request, flash, redirect, url_for, render_template, session, current_app
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.utils import secure_filename
 
 from FlaskProject.services.auth_service import User
@@ -14,7 +14,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-@auth_bp.route('/', methods=['GET', 'POST'])
+@auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         first_name = request.form['first_name']
@@ -22,6 +22,11 @@ def register():
         email = request.form['email']
         password = request.form['password']
         password_check = request.form['check_password']
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            flash("Вече имате профил с този имейл.")
+            return redirect(url_for("auth.register"))
 
         if password == password_check:
             user = User(first_name=first_name, last_name=last_name, email=email, password=password)
@@ -57,18 +62,21 @@ def login():
 
 
 @auth_bp.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for("auth.login"))
 
 
-@auth_bp.route('/profile', methods=['GET', 'POST'])
+@auth_bp.route('/profile', methods=['GET'])
+@login_required
 def profile():
     return render_template("profile.html", current_user=current_user)
 
 
 
 @auth_bp.route('/upload_picture', methods=['POST'])
+@login_required
 def upload_picture():
     if 'profile_picture' not in request.files:
         flash('Няма избран файл')
@@ -87,4 +95,3 @@ def upload_picture():
         flash('Снимката е променена успешно!')
 
     return redirect(url_for('auth.profile'))
-

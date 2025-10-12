@@ -30,7 +30,7 @@
                 <a href="{{ url_for('catalog.show_catalog') }}">Каталог</a>
                 <a href="{{ url_for('cart.show_cart') }}">🛒 Количка</a>
                 <a class="nav-link d-flex align-items-center" href="{{ url_for('auth.profile') }}">
-                    <img src="{{ url_for('static', filename='images/' ~ current_user.first_name ~ '_pfp.jpg') }}"
+                    <img src="{{ url_for('static', filename='images/' ~ current_user.first_name ~ '_pfp.png') }}"
                          onerror="this.src='{{ url_for('static', filename='images/account.png') }}'"
                          alt="Profile Picture"
                          class="rounded-circle me-2"

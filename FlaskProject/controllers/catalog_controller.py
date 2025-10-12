@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, request
-from sqlalchemy.sql.functions import current_user
+from flask_login import current_user
 
 from FlaskProject.services.catalog_service import Products
 
 catalog_bp = Blueprint('catalog', __name__)
 
-@catalog_bp.route("/catalog")
+@catalog_bp.route("/")
 def show_catalog():
     query = request.args.get("query")
     max_price = request.args.get("max_price", type=int)

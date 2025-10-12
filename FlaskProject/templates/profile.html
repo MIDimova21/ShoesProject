@@ -9,19 +9,35 @@
 <div class="settings-container">
     <div class="settings-form">
         <h2>Профил</h2>
+
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <p style="color: white; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center;">{{ message }}</p>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
         <div class="profile-picture-container">
-          <img src="{{ url_for('static', filename='images/' ~ current_user ~ '_pfp.jpg') }}"
+            <img src="{{ url_for('static', filename='images/' ~ current_user.first_name ~ '_pfp.png') }}"
                onerror="this.src='{{ url_for('static', filename='images/account.png') }}'"
-               alt="Profile Picture" class="profile-picture">
+               alt="Profile Picture"
+               class="profile-picture">
         </div>
+
         <form method="POST" action="{{ url_for('auth.upload_picture') }}" enctype="multipart/form-data">
           <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required style="display: none;">
-          <label for="profile_picture" class="file-upload-label">Изберете нова снимка</label>
-          <button type="submit">Сменете снимката</button>
+          <label for="profile_picture" class="file-upload-label">📷 Изберете нова снимка</label>
+          <button type="submit">💾 Сменете снимката</button>
         </form>
+
+        <!-- User info display -->
+        <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+          <p style="color: white; margin: 5px 0;"><strong>Име:</strong> {{ current_user.first_name }} {{ current_user.last_name }}</p>
+          <p style="color: white; margin: 5px 0;"><strong>Имейл:</strong> {{ current_user.email }}</p>
+        </div>
     </div>
 </div>
 
 {% endblock %}
-
-

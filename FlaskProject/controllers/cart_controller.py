@@ -1,15 +1,14 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
+from flask_login import current_user, login_required
+
 from FlaskProject.services.catalog_service import Products
 from FlaskProject.services import cart_service, order_service
 
 cart_bp = Blueprint("cart", __name__)
 
 @cart_bp.route("/cart")
+@login_required
 def show_cart():
-    if not session.get("logged_in"):
-        flash("Влезте в профила си за да видите вашата количка.")
-        return redirect(url_for("auth.login"))
-
     cart_items = cart_service.get_cart()
 
     products_in_cart = []
@@ -24,13 +23,9 @@ def show_cart():
 
     return render_template("cart.html", cart_items=products_in_cart)
 
-
 @cart_bp.route("/cart/add/<int:product_id>", methods=["POST"])
+@login_required
 def add_to_cart(product_id):
-    if not session.get("logged_in"):
-        flash("Влезте във профила си, за да добавите продукти в количката.")
-        return redirect(url_for("auth.login"))
-
     size = request.form.get("size")
     if not size:
         flash("Моля, изберете размер!")
@@ -46,18 +41,14 @@ def add_to_cart(product_id):
 
     return redirect(url_for("catalog.show_catalog"))
 
-
 @cart_bp.route("/checkout", methods=["GET", "POST"])
+@login_required
 def checkout():
-    if not session.get("logged_in"):
-        flash("Please login to checkout.")
-        return redirect(url_for("auth.login"))
-
     if request.method == "POST":
         address = request.form.get("address")
         payment = request.form.get("payment")
 
-        order = order_service.create_order(address, payment)
+        order = order_service.create_order(current_user.user_id, address, payment)
         if order:
             flash("Успешна поръчка!")
             return redirect(url_for("catalog.show_catalog"))

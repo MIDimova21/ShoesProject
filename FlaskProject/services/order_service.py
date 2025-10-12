@@ -6,9 +6,11 @@ from flask import session
 class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     address = db.Column(db.String(200))
     payment_method = db.Column(db.String(50))
     items = db.relationship("OrderItem", back_populates="order")
+    user = db.relationship("User", backref="orders")
 
 
 class OrderItem(db.Model):
