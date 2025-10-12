@@ -59,8 +59,3 @@ def get_filtered_products(query=None, max_price=None, available_size=None, in_st
         products = filtered_products
 
     return products
-
-@catalog_bp.route("/add_review", methods=['GET', 'POST'])
-def add_review():
-    return render_template("reviews.html")
-
