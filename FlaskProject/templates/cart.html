@@ -6,40 +6,87 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="page-title">Твоята количка</h2>
+<div class="cart-page-container">
+  <div class="cart-content">
+    <div class="cart-left">
+      <div class="cart-header">
+        <h2>Кошница ({{ cart_items|length }})</h2>
+      </div>
 
-{% if cart_items %}
-  <div class="cart-list">
-    {% for item in cart_items %}
-      <div class="cart-item">
-        <div class="meta">
-          <div class="product-image">
-                <img src="{{ item.product.image_url }}" alt="photo">
+      {% if cart_items %}
+
+        <div class="cart-items-list">
+          {% for item in cart_items %}
+            <div class="cart-item-card">
+              <div class="item-image">
+                <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
+              </div>
+
+              <div class="item-details">
+                <h3 class="item-name">{{ item.product.name }}</h3>
+                <p class="item-subtitle">{{ item.product.category }} {{ item.product.name }} {{ item.product.color }}</p>
+
+                <div class="item-specs">
+                  <span class="spec-item">Цвят: {{ item.product.color }}</span>
+                  <span class="spec-item">Размер: {{ item.size }}</span>
+                  <span class="spec-item">Количество: {{ item.quantity }}</span>
+                </div>
+
+                <div class="item-actions">
+                  <button type="submit" class="action-btn">Премахни</button>
+                </div>
+
+
+              </div>
+
+              <div class="item-pricing">
+                <p class="item-price">{{ item.product.price * item.quantity }} лв</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+      {% else %}
+        <div class="empty-cart">
+          <p>Количката ви е празна 🛒</p>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if cart_items %}
+      <div class="cart-right">
+        <div class="summary-card">
+          <h3>Обобщение</h3>
+
+          <div class="summary-row">
+            <span>Стойност на продуктите:</span>
+            {% set total_price = namespace(value=0) %}
+            {% for item in cart_items %}
+              {% set total_price.value = total_price.value + (item.product.price * item.quantity) %}
+            {% endfor %}
+            <span class="summary-value">{{ total_price.value }} лв</span>
           </div>
-          <h3>{{ item.product.name }}</h3>
-          <p>Цвят: {{ item.product.color }}</p>
-          <p>Размер: {{ item.size }}</p>
-          <p>Цена: {{ item.product.price }}лв</p>
+
+          <div class="summary-row">
+            <span>Доставка:</span>
+            <span class="summary-value">Изберете доставка и плащане</span>
+          </div>
+
+          <div class="discount-code">
+            <button class="discount-toggle">+ Код за отстъпка</button>
+          </div>
+
+          <div class="summary-total">
+            <span>Обща дължима стойност:</span>
+            <span class="total-price">{{ total_price.value }} лв</span>
+          </div>
+
+          <a href="{{ url_for('cart.checkout') }}" class="checkout-btn">ПЛАЩАНЕ</a>
+
+          <a href="{{ url_for('cart.export_cart_pdf') }}" class="pdf-btn">📄 Изтеглете PDF</a>
         </div>
       </div>
-    {% endfor %}
+    {% endif %}
   </div>
-
-  <div class="cart-summary">
-    <h3>Обобщение</h3>
-    <p>Общ брой продукти: {{ cart_items | sum(attribute='quantity') }}</p>
-
-
-    {% for item in cart_items %}
-      <p>Обща стойност: {{ item.product.price }}лв</p>
-    {% endfor %}
-
-    <a class="btn-checkout" href="">Изтеглете PDF</a>
-    <a class="btn-checkout" href="{{ url_for('cart.checkout') }}">Продължете към плащането</a>
-  </div>
-{% else %}
-  <div class="empty-cart">
-    <p>Количката ви е празна 🛒</p>
-  </div>
-{% endif %}
+</div>
 {% endblock %}
