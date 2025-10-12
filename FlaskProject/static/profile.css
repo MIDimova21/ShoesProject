@@ -37,10 +37,10 @@
 }
 
 .settings-form input:focus {
-  outline: none;
   background: rgba(255, 255, 255, 0.35);
-  border-color: #7dc6ff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  outline: none;
+  border-color: #9742b8;
+  box-shadow: 0 0 0 3px rgba(151, 66, 184, 0.1);
 }
 
 .settings-form button {

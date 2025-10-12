@@ -26,12 +26,12 @@ class OrderItem(db.Model):
     product = db.relationship("Products", back_populates="order_items")
 
 
-def create_order(address, payment_method):
+def create_order(user_id, address, payment_method):
     cart = session.get("cart", [])
     if not cart:
         return None
 
-    order = Order(address=address, payment_method=payment_method)
+    order = Order(user_id=user_id, address=address, payment_method=payment_method)
     db.session.add(order)
     db.session.flush()
 
@@ -40,23 +40,25 @@ def create_order(address, payment_method):
         if not product or product.stock <= 0:
             continue
 
+        quantity = item.get("quantity", 1)
+        if product.stock < quantity:
+            continue
 
-        product.stock -= item.get("quantity", 1)
+        product.stock -= quantity
         db.session.add(product)
-
 
         order_item = OrderItem(
             order_id=order.id,
             product_id=product.product_id,
             size=item["size"],
-            quantity=item.get("quantity", 1),
+            quantity=quantity,
             price=product.price
         )
         db.session.add(order_item)
 
     db.session.commit()
 
-
+    # Clear cart after successful order
     session["cart"] = []
     session.modified = True
 

@@ -37,7 +37,6 @@ def add_to_cart(product_id):
         return redirect(url_for("catalog.show_catalog"))
 
     cart_service.add_to_cart(product.product_id, size)
-    flash(f"{product.name} (Размер {size}) добавен към количката!")
 
     return redirect(url_for("catalog.show_catalog"))
 

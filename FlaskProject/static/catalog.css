@@ -91,6 +91,7 @@
 
 .checkbox {
   margin-top: 20px;
+  margin-right: 10px;
 }
 
 .product-meta {
@@ -112,10 +113,6 @@
   flex-direction: column;
 }
 
-.product-card-modern:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-}
 
 .product-image {
   width: 100%;
@@ -224,21 +221,4 @@
 
 .btn-login-modern:hover {
   background: #f8f0fc;
-}
-
-
-@media (max-width: 768px) {
-  .filter-row {
-    flex-direction: column;
-  }
-
-  .filter-input,
-  .filter-select {
-    min-width: 100%;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-  }
 }

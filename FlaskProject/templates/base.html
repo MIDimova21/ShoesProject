@@ -18,7 +18,7 @@
             <div class="nav-left">
               <a href="{{ url_for('catalog.show_catalog') }}"><h1>ShoeBox</h1></a>
 
-              {% if current_user.is_authenticated %}
+              {% if current_user.is_authenticated and request.endpoint == 'catalog.show_catalog'%}
                 <form class="search" method="GET" action="{{ url_for('catalog.show_catalog') }}">
                   <input type="text" name="query" placeholder="Търси..." value="{{ search_query or '' }}">
                   <button class="search" type="submit">Търси</button>
