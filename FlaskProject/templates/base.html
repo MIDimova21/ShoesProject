@@ -29,8 +29,9 @@
               {% if current_user.is_authenticated %}
                 <a href="{{ url_for('catalog.show_catalog') }}">Каталог</a>
                 <a href="{{ url_for('cart.show_cart') }}">🛒 Количка</a>
+                <a href="{{ url_for('calendar.calendar') }}">Календар</a>
 
-                <a class="nav-link d-flex align-items-center" href="{{ url_for('auth.profile') }}">
+                <a class="nav-link" href="{{ url_for('auth.profile') }}">
                     {% if current_user.is_picture_approved == True %}
                     <div class="profile-picture-container">
                         <img src="{{ url_for('static', filename='images/' ~ current_user.first_name ~ '_pfp.png') }}"

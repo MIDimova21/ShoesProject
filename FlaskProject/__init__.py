@@ -26,11 +26,13 @@ def create_app(config):
     from controllers.auth_controller import auth_bp
     from controllers.admin_controller import admin_bp
     from controllers.review_controler import review_bp
+    from controllers.calendar_controler import calendar_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(catalog_bp)
     app.register_blueprint(cart_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(review_bp)
+    app.register_blueprint(calendar_bp)
 
     return app
