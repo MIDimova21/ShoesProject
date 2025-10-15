@@ -1,3 +1,8 @@
+.nav-right {
+  padding: 0;
+  margin-bottom: -30px;
+}
+
 .settings-container {
   width: 700px;
   padding: 2.5rem;

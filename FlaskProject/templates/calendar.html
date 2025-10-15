@@ -6,5 +6,172 @@
 {% endblock %}
 
 {% block content %}
+<div class="calendar-container">
+  <div class="calendar-header">
+    <h1>📅 Календар на колекциите</h1>
+  </div>
+
+  <div class="calendar-navigation">
+    <button class="nav-btn" onclick="changeMonth(-1)">‹ Предишен</button>
+    <h2 id="currentMonth"></h2>
+    <button class="nav-btn" onclick="changeMonth(1)">Следващ ›</button>
+  </div>
+
+  <div class="calendar-grid" id="calendarGrid"></div>
+
+  <div id="eventPanel" class="event-panel" style="display: none;">
+    <div class="event-panel-header">
+      <h3 id="panelDate"></h3>
+      <button class="close-panel" onclick="closePanel()">✕</button>
+    </div>
+    <div class="event-panel-content" id="panelContent"></div>
+  </div>
+</div>
+
+<script>
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let events = {{ events|tojson|safe }};
+const isAdmin = {{ 'true' if current_user.is_admin else 'false' }};
+
+const monthNames = [
+  "Януари", "Февруари", "Март", "Април", "Май", "Юни",
+  "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"
+];
+
+function renderCalendar() {
+  const firstDay = new Date(currentYear, currentMonth, 1);
+  const lastDay = new Date(currentYear, currentMonth + 1, 0);
+  const prevLastDay = new Date(currentYear, currentMonth, 0);
+
+  const firstDayIndex = firstDay.getDay();
+  const lastDayDate = lastDay.getDate();
+  const prevLastDayDate = prevLastDay.getDate();
+
+  document.getElementById('currentMonth').textContent =
+    `${monthNames[currentMonth]} ${currentYear}`;
+
+  let days = '';
+
+  days += '<div class="calendar-weekdays">';
+  const weekdays = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+  weekdays.forEach(day => {
+    days += `<div class="weekday">${day}</div>`;
+  });
+  days += '</div>';
+
+  days += '<div class="calendar-days">';
+
+  for (let x = firstDayIndex; x > 0; x--) {
+    days += `<div class="day other-month">${prevLastDayDate - x + 1}</div>`;
+  }
+
+  for (let i = 1; i <= lastDayDate; i++) {
+    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+    const hasEvent = events.some(e => e.date === dateStr);
+    const isToday = i === new Date().getDate() &&
+                    currentMonth === new Date().getMonth() &&
+                    currentYear === new Date().getFullYear();
+
+    let dayClass = 'day';
+    if (isToday) dayClass += ' today';
+    if (hasEvent) dayClass += ' has-event';
+
+    days += `<div class="${dayClass}" onclick="showPanel('${dateStr}')">
+               <span class="day-number">${i}</span>
+               ${hasEvent ? '<span class="event-indicator">●</span>' : ''}
+             </div>`;
+  }
+
+  const totalCells = firstDayIndex + lastDayDate;
+  const remainingCells = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+
+  for (let j = 1; j <= remainingCells; j++) {
+    days += `<div class="day other-month">${j}</div>`;
+  }
+
+  days += '</div>';
+
+  document.getElementById('calendarGrid').innerHTML = days;
+}
+
+function changeMonth(direction) {
+  currentMonth += direction;
+
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  } else if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+
+  renderCalendar();
+}
+
+function showPanel(dateStr) {
+  const dayEvents = events.filter(e => e.date === dateStr);
+  const panel = document.getElementById('eventPanel');
+  const panelDate = document.getElementById('panelDate');
+  const panelContent = document.getElementById('panelContent');
+
+  const date = new Date(dateStr);
+  const day = date.getDate();
+  const month = monthNames[date.getMonth()];
+  panelDate.textContent = `${day} ${month} ${date.getFullYear()}`;
+
+  let content = '';
+
+  if (dayEvents.length > 0) {
+    dayEvents.forEach((event, index) => {
+      const eventIndex = events.findIndex(e => e.date === event.date && e.title === event.title);
+      content += `
+        <div class="event-item">
+          <div class="event-item-content">
+            <h4>${event.title}</h4>
+            ${event.description ? `<p>${event.description}</p>` : ''}
+          </div>
+          ${isAdmin ? `<a href="/calendar/delete/${eventIndex}" class="btn-delete-small" onclick="return confirm('Изтрий това събитие?')">🗑️</a>` : ''}
+        </div>
+      `;
+    });
+  }
+
+  if (isAdmin) {
+    content += `
+      <div class="add-event-form">
+        <h4>Добави нова колекция</h4>
+        <form method="POST" action="/calendar/add">
+          <input type="hidden" name="date" value="${dateStr}">
+          <input type="text" name="title" placeholder="Име на колекцията" required>
+          <textarea name="description" placeholder="Описание (по избор)" rows="3"></textarea>
+          <button type="submit">Добави</button>
+        </form>
+      </div>
+    `;
+  } else if (dayEvents.length === 0) {
+    content = '<p class="no-event-message">Няма събития за този ден</p>';
+  }
+
+  panelContent.innerHTML = content;
+  panel.style.display = 'block';
+}
+
+function closePanel() {
+  document.getElementById('eventPanel').style.display = 'none';
+}
+
+renderCalendar();
+</script>
+
+{% for message in get_flashed_messages() %}
+  <div class="flash-message">{{ message }}</div>
+  <script>
+    setTimeout(() => {
+      document.querySelector('.flash-message').remove();
+    }, 3000);
+  </script>
+{% endfor %}
+
 {% endblock %}
 
