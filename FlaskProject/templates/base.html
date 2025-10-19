@@ -29,6 +29,7 @@
                 {% if current_user.is_authenticated %}
                     {% if current_user.is_admin %}
                         <a href="{{ url_for('admin.manage_products') }}">⚙️ Настройки</a>
+                        <a href="{{ url_for('admin.created_orders') }}"> Поръчки</a>
                     {% else %}
                         <a href="{{ url_for('catalog.show_catalog') }}">Каталог</a>
                         <a href="{{ url_for('cart.show_cart') }}">🛒 Количка</a>

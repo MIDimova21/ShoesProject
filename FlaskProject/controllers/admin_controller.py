@@ -14,6 +14,12 @@ def manage_products():
     return render_template("admin_products.html", products=products)
 
 
+@admin_bp.route("/created/orders")
+def created_orders():
+    return render_template("admin_orders.html")
+
+
+
 @admin_bp.route("/products/add", methods=["GET", "POST"])
 def add_product():
     if request.method == "POST":

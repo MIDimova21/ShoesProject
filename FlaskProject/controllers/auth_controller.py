@@ -52,8 +52,12 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if user.check_password(password):
-            login_user(user)
-            return redirect(url_for("catalog.show_catalog"))
+            if email == "admin@gmail.com":
+                login_user(user)
+                return redirect(url_for("admin.manage_products"))
+            else:
+                login_user(user)
+                return redirect(url_for("catalog.show_catalog"))
         else:
             flash("Грешен имейл или парола.")
 
