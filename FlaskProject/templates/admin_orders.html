@@ -1,10 +1,98 @@
 {% extends "base.html" %}
 
 {% block link %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 {% endblock %}
 
 {% block content %}
+<div class="orders-container">
+  <div class="orders-stats">
+    <div class="stat-card">
+      <div class="stat-label">Общо поръчки</div>
+      <div class="stat-value">{{ orders|length }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Общи приходи</div>
+      <div class="stat-value">{{ total_revenue }} лв</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Средна стойност</div>
+      <div class="stat-value">
+        {% if orders|length > 0 %}
+          {{ "%.2f"|format(total_revenue / orders|length) }} лв
+        {% else %}
+          0 лв
+        {% endif %}
+      </div>
+    </div>
+  </div>
 
+  <div class="orders-table-wrapper">
+    <div class="filter-section">
+      <form method="GET" action="{{ url_for('admin.created_orders') }}" style="display: flex; gap: 15px; flex-wrap: wrap; width: 100%;">
+        <input type="text" name="query" class="filter-input" placeholder="Търси по клиент или продукт..." value="{{ search_query or '' }}" style="flex: 2; min-width: 300px;">
+        <button type="submit" class="export-btn" style="background: #9742b8;">Търси</button>
+      </form>
+    </div>
+
+    {% if orders %}
+
+      <table class="orders-table" id="ordersTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Клиент</th>
+            <th>Продукти</th>
+            <th>Обща сума</th>
+            <th>Плащане</th>
+            <th>Адрес</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td class="order-id">#{{ order.id }}</td>
+              <td>
+                <div class="customer-info">
+                  <span class="customer-name">{{ order.user.first_name }} {{ order.user.last_name }}</span>
+                  <span class="customer-email">{{ order.user.email }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="order-items-list">
+                  {% for item in order.items %}
+                    <div class="order-item">
+                      <div class="item-name">{{ item.product.name }}</div>
+                      <div class="item-details">
+                        Размер: {{ item.size }} | Количество: {{ item.quantity }} | {{ item.price }} лв
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </td>
+              <td class="order-total">
+                {{ order_totals[order.id] }} лв
+              </td>
+              <td>
+                {% if order.payment_method == "Credit Card" %}
+                  <span class="payment-badge payment-card">💳 Дебитна карта</span>
+                {% else %}
+                  <span class="payment-badge payment-cod">💵 Наложен платеж</span>
+                {% endif %}
+              </td>
+              <td class="address-cell" title="{{ order.address }}">
+                📍 {{ order.address }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="no-orders">
+        <p>📭 Все още няма направени поръчки</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

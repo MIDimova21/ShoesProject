@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from FlaskProject import db
 from FlaskProject.services.auth_service import User
+from FlaskProject.services.order_service import Order, OrderItem
 
 from FlaskProject.services.catalog_service import Products, Trainers, Boots, Formal, Sneakers, Sandals
 
@@ -16,7 +17,36 @@ def manage_products():
 
 @admin_bp.route("/created/orders")
 def created_orders():
-    return render_template("admin_orders.html")
+    search_query = request.args.get("query")
+
+    orders_query = Order.query
+
+    if search_query:
+        orders_query = orders_query.join(User).outerjoin(OrderItem).outerjoin(Products).filter(
+            (User.first_name.ilike(f"%{search_query}%")) |
+            (User.last_name.ilike(f"%{search_query}%")) |
+            (User.email.ilike(f"%{search_query}%")) |
+            (Products.name.ilike(f"%{search_query}%")) |
+            (Products.category.ilike(f"%{search_query}%"))
+        ).distinct()
+
+    orders = orders_query.order_by(Order.id.desc()).all()
+
+    total_revenue = 0
+    order_totals = {}
+
+    for order in orders:
+        order_total = sum(item.price * item.quantity for item in order.items)
+        order_totals[order.id] = order_total
+        total_revenue += order_total
+
+    return render_template(
+        "admin_orders.html",
+        orders=orders,
+        total_revenue=total_revenue,
+        order_totals=order_totals,
+        search_query=search_query
+    )
 
 
 
